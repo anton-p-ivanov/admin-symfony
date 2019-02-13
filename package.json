@@ -1,0 +1,16 @@
+{
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "dev-server": "encore dev-server --host 192.168.1.80 --disable-host-check",
+    "dev": "encore dev",
+    "watch": "encore dev --watch",
+    "build": "encore production"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@symfony/webpack-encore": "^0.23.0",
+    "node-sass": "^4.11.0",
+    "sass-loader": "^7.1.0"
+  }
+}
