@@ -1,0 +1,45 @@
+@import "../includes/variables";
+
+$button-colors: (
+    info: (background-color: $color-info, color: $color-white),
+    success: (background-color: $color-success, color: $color-white),
+    warning: (background-color: $color-warning, color: $color-white),
+    danger: (background-color: $color-danger, color: $color-white),
+    primary: (background-color: $color-primary, color: $color-white),
+);
+
+.btn {
+    display: inline-block;
+    background-color: transparent;
+    border: solid 2px transparent;
+    padding: .5rem 1rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: border-color .1s ease-in-out, box-shadow .1s ease-in-out, background-color .1s ease-in-out;
+
+    @each $status, $color-map in $button-colors {
+        &--#{$status} {
+            @each $property, $color in $color-map {
+                #{$property}: $color;
+            }
+
+            &:hover,
+            &:active {
+                background-color: darken(map_get($color-map, 'background-color'), 10%);
+            }
+
+            &:focus {
+                box-shadow: 0 0 0 4px rgba(map_get($color-map, 'background-color'), .25);
+            }
+        }
+    }
+
+    &--block {
+        width: 100%;
+    }
+
+    &:focus,
+    &:active {
+        outline: 0;
+    }
+}

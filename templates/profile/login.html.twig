@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'form.login.title' | trans }}
+{% endblock %}
+
+{% block body %}
+    <div class="p-profile">
+        <div class="modal modal--login">
+            <div class="modal__header">
+                {{ block('title') }}
+            </div>
+            <div class="modal__body">
+                {% if error %}
+                    <div class="alert alert--danger">
+                        {{ error.messageKey|trans(error.messageData, 'security') }}
+                    </div>
+                {% endif %}
+
+                <form action="{{ path('profile:login') }}" method="post" class="form form--login">
+                    <div class="form__group">
+                        <input type="text" id="username" name="_username" class="form__input" value="{{ last_username }}" placeholder="{{ 'form.profile.username' | trans }}" autofocus />
+                    </div>
+
+                    <div class="form__group">
+                        <input type="password" id="password" name="_password" class="form__input" placeholder="{{ 'form.profile.password' | trans }}" />
+                    </div>
+
+                    <div class="form__group">
+                        <div class="checkbox">
+                            <input type="checkbox" id="remember_me" name="_remember_me" class="checkbox__input" />
+                            <label for="remember_me" class="checkbox__label">{{ 'form.login.remember_me' | trans }}</label>
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
+
+                    <button type="submit" class="btn btn--primary btn--block">{{ 'form.login.submit' | trans }}</button>
+
+                    <div class="links-group">
+                        <a class="links-group__link" href="{{ path('profile:register') }}">{{ 'form.login.register_link' | trans }}</a>
+                        <a class="links-group__link" href="{{ path('profile:reset') }}">{{ 'form.login.reset_link' | trans }}</a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('profile') }}
+{% endblock %}

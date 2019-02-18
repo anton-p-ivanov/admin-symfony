@@ -1,0 +1,45 @@
+form:
+    placeholder:
+        email: john.smith@email.com
+        first_name: John
+        last_name: Smith
+        password: Password
+        password_repeat: Repeat password
+    login:
+        title: Welcome!
+        remember_me: Remember me
+        submit: Login
+        register_link: Register a new profile
+        reset_link: Reset forgotten password
+    reset:
+        title: Password reset
+        username: Please type an E-Mail linked with your personal profile
+        submit: Reset password
+        invalid_username: User with that E-Mail not registered
+    password:
+        title: Password change
+        checkword: Checkword
+        submit: Change password
+        notice: You can find a checkword in your incoming mail
+        username_not_found: User not registered
+        invalid_checkword: Checkword is invalid or expired
+    register:
+        title: Register a new profile
+        submit: Register
+        user_exists: This E-Mail is already in use
+    confirm:
+        title: Confirm your profile
+        submit: Confirm
+        checkword: Checkword
+        notice: You can find a checkword in your incoming mail
+        username_not_found: User not registered
+        invalid_password: Password is invalid or expired
+        invalid_checkword: Checkword is invalid or expired
+    profile:
+        username: E-Mail
+        password: Password
+        password_repeat: Repeat password
+        first_name: First name
+        last_name: Last name
+        second_name: Second name
+        login_link: Login with your credentials

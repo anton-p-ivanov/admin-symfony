@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'form.reset.title' | trans }}
+{% endblock %}
+
+{% block body %}
+    <div class="p-profile">
+        <div class="modal modal--reset">
+            <div class="modal__header">
+                {{ block('title') }}
+            </div>
+            <div class="modal__body">
+
+                {{ form_start(form, {'attr': {'class': 'form form--reset', 'novalidate': true}}) }}
+                {{ form_errors(form) }}
+
+                <div class="form__group">
+                    {{ form_label(form.username) }}
+                    {{ form_widget(form.username, {'attr': {'placeholder': 'form.placeholder.email', 'autofocus': true}}) }}
+                    {{ form_errors(form.username) }}
+                </div>
+
+                <button type="submit" class="btn btn--primary btn--block">{{ 'form.reset.submit' | trans }}</button>
+
+                <div class="links-group">
+                    <a class="links-group__link" href="{{ path('profile:login') }}">{{ 'form.profile.login_link' | trans }}</a>
+                </div>
+
+                {{ form_end(form) }}
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('profile') }}
+{% endblock %}

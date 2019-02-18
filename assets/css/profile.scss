@@ -1,0 +1,46 @@
+@import "components/modal";
+@import "components/alert";
+@import "components/forms";
+@import "components/buttons";
+
+.p-profile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    padding: 2rem 0;
+}
+
+.modal--login,
+.modal--reset {
+    width: 350px;
+    max-width: 100%;
+}
+
+.modal--password,
+.modal--confirm,
+.modal--register {
+    width: 450px;
+    max-width: 100%;
+}
+
+.links-group {
+    text-align: center;
+    padding-top: 1rem;
+
+    &__link {
+        display: block;
+    }
+}
+
+.form__group--columns {
+    display: flex;
+    margin: 0 -.5rem;
+
+    & > .form__group {
+        flex: 1 0 0;
+        margin-left: .5rem;
+        margin-right: .5rem;
+    }
+}

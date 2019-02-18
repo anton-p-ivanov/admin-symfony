@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'form.confirm.title' | trans }}
+{% endblock %}
+
+{% block body %}
+    <div class="p-profile">
+        <div class="modal modal--confirm">
+            <div class="modal__header">
+                {{ block('title') }}
+            </div>
+            <div class="modal__body">
+
+                <div class="alert alert--warning">
+                    {{ 'form.confirm.notice' | trans }}
+                </div>
+
+                {{ form_start(form, {'attr': {'class': 'form form--confirm', 'novalidate': true}}) }}
+                {{ form_errors(form) }}
+
+                {{ form_row(form.username, {'attr': {'placeholder': 'form.placeholder.email', 'autofocus': true}}) }}
+                {{ form_row(form.checkword) }}
+                {{ form_row(form.password) }}
+
+                <button type="submit" class="btn btn--primary btn--block">{{ 'form.confirm.submit' | trans }}</button>
+
+                <div class="links-group">
+                    <a class="links-group__link" href="{{ path('profile:login') }}">{{ 'form.profile.login_link' | trans }}</a>
+                </div>
+
+                {{ form_end(form) }}
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('profile') }}
+{% endblock %}

@@ -1,0 +1,14 @@
+@import "../includes/variables";
+
+.modal {
+    &__header {
+        padding: 1rem;
+        background-color: white;
+        border-bottom: solid 1px $color-gray-light;
+    }
+
+    &__body {
+        padding: 1rem;
+        background-color: white;
+    }
+}

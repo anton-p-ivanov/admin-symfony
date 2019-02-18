@@ -1,0 +1,12 @@
+/**
+ * Mixins
+ */
+@mixin material-icon($name) {
+    content: $name;
+    font-family: "Material Icons", sans-serif;
+    font-size: 24px;
+    display: block;
+    position: absolute;
+    width: 24px;
+    height: 24px;
+}

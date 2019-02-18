@@ -1,0 +1,22 @@
+@import "../includes/variables";
+
+$alert-colors: (
+    info: $color-info,
+    success: $color-success,
+    warning: $color-warning,
+    danger: $color-danger,
+);
+
+.alert {
+    border-left: solid 3px;
+    padding: .5rem 1rem;
+    margin-bottom: 1rem;
+
+    @each $status, $color in $alert-colors {
+        &--#{$status} {
+            background-color: transparentize($color, .8);
+            border-color: transparentize($color, .7);
+            color: $color;
+        }
+    }
+}

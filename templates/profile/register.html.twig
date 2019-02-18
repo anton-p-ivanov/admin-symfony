@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'form.register.title' | trans }}
+{% endblock %}
+
+{% block body %}
+    <div class="p-profile">
+        <div class="modal modal--register">
+            <div class="modal__header">
+                {{ block('title') }}
+            </div>
+            <div class="modal__body">
+
+                {{ form_start(form, {'attr': {'class': 'form form--register', 'novalidate': true}}) }}
+                {{ form_errors(form) }}
+
+                {{ form_row(form.username, {'attr': {'placeholder': 'form.placeholder.email', 'autofocus': true}}) }}
+
+                <div class="form__group form__group--columns">
+                    {{ form_row(form.fname, {'attr': {'placeholder': 'form.placeholder.first_name'}}) }}
+                    {{ form_row(form.lname, {'attr': {'placeholder': 'form.placeholder.last_name'}}) }}
+                </div>
+
+                <div class="form__group form__group--columns">
+                    {{ form_row(form.password.first, {'attr': {'placeholder': 'form.placeholder.password'}}) }}
+                    {{ form_row(form.password.second, {'attr': {'placeholder': 'form.placeholder.password_repeat'}}) }}
+                </div>
+
+                <button type="submit" class="btn btn--primary btn--block">{{ 'form.register.submit' | trans }}</button>
+
+                <div class="links-group">
+                    <a class="links-group__link" href="{{ path('profile:login') }}">{{ 'form.profile.login_link' | trans }}</a>
+                </div>
+
+                {{ form_end(form) }}
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('profile') }}
+{% endblock %}

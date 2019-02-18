@@ -2,12 +2,15 @@
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
-    "dev-server": "encore dev-server --host 192.168.1.80 --disable-host-check",
+    "dev-server": "encore dev-server --host static.web.host --https --disable-host-check --cert=D:\\_wildcard.web.host.pem --key=D:\\_wildcard.web.host-key.pem",
     "dev": "encore dev",
     "watch": "encore dev --watch",
     "build": "encore production"
   },
-  "dependencies": {},
+  "dependencies": {
+    "material-design-icons": "^3.0.1",
+    "normalize.css": "^8.0.1"
+  },
   "devDependencies": {
     "@symfony/webpack-encore": "^0.23.0",
     "node-sass": "^4.11.0",

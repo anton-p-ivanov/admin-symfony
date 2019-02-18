@@ -1,0 +1,20 @@
+[
+  {
+    "code": "DRAFT",
+    "title": "Черновик",
+    "isDefault": true,
+    "sort": 100
+  },
+  {
+    "code": "READY",
+    "title": "Готов к публикации",
+    "isDefault": false,
+    "sort": 200
+  },
+  {
+    "code": "PUBLISHED",
+    "title": "Опубликован",
+    "isDefault": false,
+    "sort": 300
+  }
+]

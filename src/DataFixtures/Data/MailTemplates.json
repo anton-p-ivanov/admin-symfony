@@ -1,0 +1,14 @@
+[
+  {
+    "code": "USER_RESET",
+    "sender": "{{SITE_EMAIL}}",
+    "recipient": "{{USER_EMAIL}}",
+    "subject": "Запрос на смену пароля"
+  },
+  {
+    "code": "USER_REGISTER",
+    "sender": "{{SITE_EMAIL}}",
+    "recipient": "{{USER_EMAIL}}",
+    "subject": "Уведомление о регистрации нового пользователя"
+  }
+]
