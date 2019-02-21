@@ -1,0 +1,60 @@
+@import "../includes/variables";
+
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    color: $color-gray-dark;
+
+    &__position {
+        font-size: $font-size-sm;
+    }
+}
+
+.pager {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    &__item {
+        display: block;
+    }
+
+    &__span,
+    &__link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2rem;
+        height: 2rem;
+    }
+
+    &__link {
+        color: $color-gray-medium;
+        margin-right: .5rem;
+        transition: color .2s ease-in-out;
+
+        &:hover {
+            text-decoration: none;
+            color: $color-black;
+        }
+    }
+
+    &__icon {
+        fill: $color-gray-medium;
+        padding: .25rem;
+        width: 2rem;
+        height: 2rem;
+
+        &:hover {
+            fill: $color-black;
+        }
+
+        &--disabled,
+        &--disabled:hover {
+            fill: $color-gray-medium;
+        }
+    }
+}

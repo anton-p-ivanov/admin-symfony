@@ -1,0 +1,24 @@
+@import "../includes/variables";
+
+.toolbar {
+    background-color: $color-gray-light;
+    height: 3.5rem;
+    margin: 0 -1rem;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+
+    &__buttons {
+        display: flex;
+        align-items: center;
+    }
+
+    &__search {
+        display: flex;
+        align-items: center;
+    }
+
+    &__counter {
+        margin-right: 1rem;
+    }
+}

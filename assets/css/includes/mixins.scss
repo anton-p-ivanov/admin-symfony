@@ -1,12 +1,20 @@
 /**
  * Mixins
  */
-@mixin material-icon($name) {
-    content: $name;
-    font-family: "Material Icons", sans-serif;
-    font-size: 24px;
-    display: block;
-    position: absolute;
-    width: 24px;
-    height: 24px;
+
+@mixin checkbox-svg($state, $color) {
+    @if $state {
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M21 3H3v18h18V3zM10 17l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="#{$color}" shape-rendering="crispEdges"/></svg>');
+    } @else {
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 5v14H5V5h14m2-2H3v18h18V3z" fill="#{$color}" shape-rendering="crispEdges"/></svg>');
+    }
+}
+
+@mixin sort-svg($direction) {
+    @if $direction == 'asc' {
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z" fill="#{$color-gray-dark}"/></svg>');
+    }
+    @else {
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z" fill="#{$color-gray-dark}"/></svg>');
+    }
 }

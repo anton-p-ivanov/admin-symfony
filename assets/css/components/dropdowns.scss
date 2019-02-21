@@ -1,0 +1,110 @@
+@import "../includes/variables";
+
+.dropdown {
+    position: relative;
+
+    &:hover {
+        & > .dropdown__toggle {
+            color: $color-black;
+            text-decoration: none;
+        }
+
+        & > .dropdown__menu {
+            display: block;
+        }
+    }
+
+    &--navbar {
+        & > .dropdown__toggle {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+
+            & > svg {
+                fill: $color-gray-dark;
+            }
+        }
+
+        &:hover > .dropdown__toggle {
+            background-color: rgba($color-black, .1);
+
+            & > svg {
+                fill: $color-black;
+            }
+        }
+    }
+
+    &--table {
+        padding-top: .5rem;
+        padding-bottom: .5rem;
+    }
+
+    &__toggle {
+        padding: .5rem 1rem;
+        display: flex;
+        color: inherit;
+        position: relative;
+
+        &--icon {
+            padding: 0;
+        }
+
+        &:hover,
+        &:focus,
+        &:active {
+            color: $color-black;
+            text-decoration: none;
+        }
+    }
+
+    &__menu {
+        position: absolute;
+        margin: 0;
+        padding: .5rem 0;
+        top: 100%;
+        left: 0;
+        z-index: 100;
+        display: none;
+        min-width: 160px;
+        list-style: none;
+        background-color: $color-white;
+        border: 2px solid $color-gray-medium;
+        box-shadow: 0 4px 8px 0 rgba($color-black, .25);
+        color: $color-black;
+
+        &--right {
+            left: auto;
+            right: 0;
+        }
+    }
+
+    &__item {
+        display: block;
+
+        &--divider {
+            height: 1px;
+            margin: .5rem 0;
+            overflow: hidden;
+            background-color: $color-gray-medium;
+        }
+    }
+
+    &__link {
+        display: block;
+        padding: .25rem 1rem;
+        background-color: transparent;
+        color: inherit;
+        transition: background-color .1s ease-in-out, color .1s ease-in-out;
+        white-space: nowrap;
+
+        &:hover {
+            text-decoration: none;
+            color: $color-white;
+            background-color: $color-primary;
+        }
+
+        &:active,
+        &:focus {
+            text-decoration: none;
+        }
+    }
+}

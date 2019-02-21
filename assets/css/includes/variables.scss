@@ -1,7 +1,13 @@
 /**
+ * Font
+ */
+$font-size-base: 16px;
+$font-size-sm: .875rem;
+
+/**
  * Colors
  */
-$color-info: #17a2b8;
+$color-info: #0f52ba;
 $color-success: #28a745;
 $color-warning: #fd7e14;
 $color-danger: #dc3545;
@@ -9,5 +15,9 @@ $color-danger: #dc3545;
 $color-primary: $color-warning;
 
 $color-white: #ffffff;
-$color-gray-light: #d3d3d3;
-$color-gray-medium: #b0b0b0;
+$color-gray-light: #f0f0f0;
+$color-gray-medium: #b0b5bf;
+$color-gray-dark: #70757f;
+$color-black: #30353f;
+
+$color-text-body: $color-black;

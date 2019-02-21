@@ -6,15 +6,17 @@ $button-colors: (
     warning: (background-color: $color-warning, color: $color-white),
     danger: (background-color: $color-danger, color: $color-white),
     primary: (background-color: $color-primary, color: $color-white),
+    default: (background-color: $color-white, color: $color-black, border-color: $color-gray-medium)
 );
 
 .btn {
     display: inline-block;
     background-color: transparent;
     border: solid 2px transparent;
-    padding: .5rem 1rem;
+    padding: .625rem 1rem;
     line-height: 1;
     cursor: pointer;
+    white-space: nowrap;
     transition: border-color .1s ease-in-out, box-shadow .1s ease-in-out, background-color .1s ease-in-out;
 
     @each $status, $color-map in $button-colors {
@@ -26,6 +28,9 @@ $button-colors: (
             &:hover,
             &:active {
                 background-color: darken(map_get($color-map, 'background-color'), 10%);
+                @if map_has_key($color-map, 'border-color') {
+                    border-color: darken(map_get($color-map, 'border-color'), 10%);
+                }
             }
 
             &:focus {
@@ -35,11 +40,50 @@ $button-colors: (
     }
 
     &--block {
+        display: block;
         width: 100%;
     }
 
+    &--icon {
+        fill: $color-black;
+        display: block;
+        padding: .375rem;
+    }
+
+    &--disabled {
+        fill: $color-gray-medium;
+        background-color: $color-gray-light;
+        border-color: lighten($color-gray-medium, 10%);
+        cursor: default;
+
+        &:hover,
+        &:active {
+            background-color: $color-gray-light;
+            border-color: lighten($color-gray-medium, 10%);
+        }
+        
+        &:focus {
+            box-shadow: none;
+        }
+    }
+
+    &:hover,
     &:focus,
     &:active {
+        text-decoration: none;
         outline: 0;
+    }
+}
+
+.btn-group {
+    display: flex;
+    margin-right: .5rem;
+
+    &__item {
+        margin-right: 4px;
+    }
+
+    &:last-child {
+        margin-right: 0;
     }
 }

@@ -1,0 +1,20 @@
+@import "../includes/variables";
+
+.breadcrumbs {
+    display: block;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    &__item {
+        display: inline-block;
+        margin: 0;
+        padding: 0;
+
+        &:not(:last-child)::after {
+            padding: 0 .25rem;
+            color: $color-gray-medium;
+            content: "/\00a0";
+        }
+    }
+}

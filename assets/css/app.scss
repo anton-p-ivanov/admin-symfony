@@ -1,11 +1,12 @@
+@import url('https://fonts.googleapis.com/css?family=Rubik:400,400i,500');
 @import "~normalize.css";
-@import "~material-design-icons/iconfont/material-icons.css";
 @import "includes/variables";
 
 body {
     background-color: $color-gray-light;
-    font-family: "Helvetica Neue", Arial, sans-serif;
-    font-size: 16px;
+    color: $color-text-body;
+    font-family: 'Rubik', "Helvetica Neue", Arial, sans-serif;
+    font-size: $font-size-base;
     line-height: 1.5rem;
 }
 
@@ -15,8 +16,17 @@ body {
     width: 100%;
 }
 
+body {
+    display: flex;
+    flex-direction: column;
+}
+
 * {
     box-sizing: border-box;
+}
+
+svg {
+    display: block;
 }
 
 a {
@@ -27,5 +37,57 @@ a {
     &:hover,
     &:active {
         text-decoration: underline;
+    }
+}
+
+.page {
+    &__header {
+        height: 3.5rem;
+        padding: 0 1rem;
+    }
+
+    &__content {
+        flex: 1 0 auto;
+        padding: 1rem;
+        background-color: $color-white;
+        border-top: solid 2px $color-gray-medium;
+        border-bottom: solid 2px $color-gray-medium;
+    }
+
+    &__footer {
+        flex-shrink: 0;
+        color: $color-gray-dark;
+        font-size: $font-size-sm;
+        padding: .5rem 1rem;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    &__title {
+        font-size: 1.5rem;
+        font-weight: 400;
+        letter-spacing: -.03rem;
+        margin: .5rem 0 1.5rem;
+        line-height: 1;
+    }
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &__title {
+        font-size: 1.5rem;
+        color: $color-gray-dark;
+    }
+}
+
+.navbar {
+    color: $color-gray-dark;
+    display: flex;
+
+    &__group {
+        padding: 0;
     }
 }

@@ -1,0 +1,100 @@
+@import "../includes/variables";
+@import "../includes/mixins";
+
+.table {
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+    table-layout: fixed;
+
+    &__head {
+        border-bottom: solid 2px $color-gray-medium;
+    }
+
+    &__row {
+        border-bottom: solid 1px $color-gray-medium;
+
+        &--alt {
+            background-color: $color-gray-light;
+        }
+    }
+
+    &__item {
+        text-align: left;
+        padding: .5rem 1rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        &--head {
+            font-weight: 500;
+        }
+
+        &--icon {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        &--icon > svg,
+        &--dropdown svg {
+            fill: $color-gray-dark;
+            margin: auto;
+        }
+
+        &--dropdown {
+            overflow: visible;
+            padding: 0;
+            margin-top: -.5rem;
+            margin-bottom: -.5rem;
+
+            &:hover {
+                background-color: rgba($color-black, .1);
+
+                & svg {
+                    fill: $color-black;
+                }
+            }
+        }
+    }
+
+    &__sort {
+        display: inline-block;
+        color: $color-black;
+        text-decoration: none;
+        background-repeat: no-repeat;
+        background-position: right center;
+        padding-right: 2rem;
+
+        &:hover {
+            @include sort-svg('asc');
+            text-decoration: none;
+        }
+
+        &--asc {
+            @include sort-svg('asc');
+
+            &:hover {
+                @include sort-svg('desc');
+            }
+        }
+
+        &--desc {
+            @include sort-svg('desc');
+        }
+    }
+}
+
+.grid-path {
+    display: flex;
+    justify-content: space-between;
+    background-color: $color-gray-light;
+    margin: 1rem 0;
+    padding: .5rem 1rem;
+
+    &__item {
+        &--right {
+            font-size: $font-size-sm;
+            color: $color-gray-medium;
+        }
+    }
+}
