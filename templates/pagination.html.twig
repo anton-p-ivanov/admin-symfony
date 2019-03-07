@@ -1,0 +1,39 @@
+{% set prevPage = (paginator.page > 1 ? (paginator.page - 1) : 1) %}
+{% set nextPage = (paginator.page < paginator.pagesTotal ? (paginator.page + 1) : paginator.pagesTotal) %}
+{% set searchParams = {'search' : app.request.get('search')} %}
+{% set params = params is defined ? params|merge(searchParams) : searchParams %}
+<div class="pagination">
+    <div class="pagination__pager">
+        {% if paginator.pagesTotal > 1 %}
+        <ul class="pager">
+            <li class="pager__item">
+                {% if paginator.page == 1 %}
+                    <span class="pager__span">
+                        <svg width="24" height="24" class="pager__icon pager__icon--disabled"><use xlink:href="#svg-backward"></use></svg>
+                    </span>
+                {% else %}
+                    <a href="{{ path(path, params|merge({'page': prevPage})) }}" class="pager__link" data-pager="backward">
+                        <svg width="24" height="24" class="pager__icon"><use xlink:href="#svg-backward"></use></svg>
+                    </a>
+                {% endif %}
+            </li>
+            <li class="pager__item">
+                {% if paginator.page == paginator.pagesTotal %}
+                    <span class="pager__span">
+                        <svg width="24" height="24" class="pager__icon pager__icon--disabled"><use xlink:href="#svg-forward"></use></svg>
+                    </span>
+                {% else %}
+                    <a href="{{ path(path, params|merge({'page': nextPage})) }}" class="pager__link" data-pager="forward">
+                        <svg width="24" height="24" class="pager__icon"><use xlink:href="#svg-forward"></use></svg>
+                    </a>
+                {% endif %}
+            </li>
+        </ul>
+        {% endif %}
+    </div>
+    <div class="pagination__position">
+        {% if paginator.resultsTotal > 0 %}
+        Elements {{ paginator.firstIndex }} &mdash; {{ paginator.lastIndex }} of {{ paginator.resultsTotal }} are shown
+        {% endif %}
+    </div>
+</div>
