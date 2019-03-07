@@ -1,0 +1,58 @@
+{% block spreadsheet %}
+    <div class="spreadsheet__toolbar">
+        {% block spreadsheet_toolbar %}
+            <div class="toolbar">
+                <div class="toolbar__buttons">
+                    {% block toolbar_buttons %}
+                        {#
+                        <div class="btn-group" role="group">
+                            <div class="btn-group__item">
+                                <a class="btn btn--default" href="#">
+                                    Button
+                                </a>
+                            </div>
+                        </div>
+                        #}
+                    {% endblock %}
+                </div>
+                <div class="toolbar__search">
+                    {% block toolbar_search %}
+                        <div class="toolbar__counter">{{ 'toolbar.results_total' | trans({'{total}': rows.resultsTotal}, 'spreadsheet') }}</div>
+                        <form class="form form--search">
+                            <div class="input-group">
+                                <div class="input-group__input">
+                                    <label>
+                                        <input class="form__input form__input--toolbar" type="text" name="search" id="search" placeholder="{{ 'toolbar.search.placeholder' | trans({}, 'spreadsheet') }}" />
+                                    </label>
+                                </div>
+                                <div class="input-group__append">
+                                    <div class="btn-group">
+                                        <div class="btn-group__item">
+                                            <button type="submit" class="btn btn--default btn--icon" title="{{ 'toolbar.search.search.title' | trans({}, 'spreadsheet') }}">
+                                                <svg width="24" height="24"><use xlink:href="#svg-search"></use></svg>
+                                            </button>
+                                        </div>
+                                        <div class="btn-group__item">
+                                            <a class="btn btn--default btn--icon" href="#" title="{{ 'toolbar.search.apply.title' | trans({}, 'spreadsheet') }}" data-toggle="modal" data-target="#modal-filter">
+                                                <svg width="24" height="24"><use xlink:href="#svg-filter"></use></svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    {% endblock %}
+                </div>
+            </div>
+        {% endblock %}
+    </div>
+    <div class="spreadsheet__path">
+        {% block spreadsheet_path %}{% endblock %}
+    </div>
+    <div class="spreadsheet__table">
+        {% block spreadsheet_table %}{% endblock %}
+    </div>
+    <div class="spreadsheet__pagination">
+        {% block spreadsheet_pagination %}{% endblock %}
+    </div>
+{% endblock %}

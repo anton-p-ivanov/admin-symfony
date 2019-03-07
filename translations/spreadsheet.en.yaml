@@ -1,0 +1,8 @@
+toolbar:
+    results_total: "Total found: {total}"
+    search:
+        placeholder: Search...
+        search:
+            title: Search
+        apply:
+            title: Apply filter
