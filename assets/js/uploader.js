@@ -220,7 +220,7 @@ import uploader from "./components/uploader";
         percent = Math.ceil(response.end * 100 / response.size);
 
         // Set width depends on percent value
-        progress.querySelector('.progress__bar').style.width = percent + '%';
+        progress.querySelector('.progress__bar').style.width = (percent > 100 ? 100 : percent) + '%';
 
         if (request.status === RESPONSE_PARTIAL) {
             setProgressStatus(progress, PROGRESS_UPLOADING);
