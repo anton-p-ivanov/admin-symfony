@@ -99,7 +99,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
     /**
      * @var string
      *
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="text", nullable=true, length=65536)
      */
     private $comments;
 

@@ -40,7 +40,7 @@ class Role
     /**
      * @var string|null
      *
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="text", nullable=true, length=65536)
      */
     private $description;
 

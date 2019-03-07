@@ -79,14 +79,14 @@ class Template
     /**
      * @var string|null
      * 
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="text", nullable=true, length=65536)
      */
     private $textBody;
 
     /**
      * @var string|null
      * 
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="text", nullable=true, length=65536)
      */
     private $htmlBody;
 
