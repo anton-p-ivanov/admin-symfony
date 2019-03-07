@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="workflow_statuses")
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\Workflow\StatusRepository")
  */
 class WorkflowStatus
 {
