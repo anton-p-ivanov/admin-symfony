@@ -32,6 +32,11 @@ class ConfirmService
     private $translator;
 
     /**
+     * @var User\User
+     */
+    private $user;
+
+    /**
      * ResetService constructor.
      *
      * @param EntityManagerInterface $entityManager
@@ -66,6 +71,8 @@ class ConfirmService
             );
             return false;
         }
+
+        $this->user = $user;
 
         $checkword = $this->validateCheckword($user, $form);
         $this->validatePassword($user, $form);
@@ -136,5 +143,13 @@ class ConfirmService
                 $this->translator->trans('form.confirm.invalid_password'))
             );
         }
+    }
+
+    /**
+     * @return User\User
+     */
+    public function getUser(): User\User
+    {
+        return $this->user;
     }
 }
