@@ -1,4 +1,10 @@
 form:
+    button:
+        apply: Apply
+        save: Save
+        cancel: Cancel
+        selection: Toggle selection
+        close: Close
     placeholder:
         email: john.smith@email.com
         first_name: John
@@ -43,3 +49,5 @@ form:
         last_name: Last name
         second_name: Second name
         login_link: Login with your credentials
+general:
+    not_available: Not available

@@ -1,0 +1,196 @@
+{% extends "_spreadsheet.html.twig"  %}
+
+{% block spreadsheet_path %}
+    <div class="grid-path">
+        <div class="grid-path__item grid-path__item--left">
+            <ul class="breadcrumbs">
+                {% for node in path %}
+                    <li class="breadcrumbs__item">
+                        {% set node_title = node.storage ? node.storage.title : 'Root' %}
+                        {% if loop.last %}
+                            <span>{{ node_title }}</span>
+                        {% else %}
+                            <a href="{{ path('storage:index', {'uuid': node.uuid}) }}">{{ node_title }}</a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="grid-path__item grid-path__item--right">
+            {% set space = app.session.get('space') %}
+            {{ 'storage.free_space' | trans({
+                '{free}': space.free | size,
+                '{total}': space.total | size
+            }, 'storage') }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block spreadsheet_table %}
+    <table class="table">
+        <colgroup>
+            <col width="54">
+            <col>
+            <col width="12%" span="4">
+            <col width="40">
+        </colgroup>
+        <thead class="table__head">
+        <tr class="table__row">
+            <th class="table__item table__item--head">
+                <div class="checkbox checkbox--table">
+                    <label class="checkbox__label checkbox__label--table">
+                        <input type="checkbox" class="checkbox__input" data-toggle="table-select-all">
+                    </label>
+                </div>
+            </th>
+            {% set headers = [
+                { 'title': 'table.head.file_folder', 'code': 'title' },
+                { 'title': 'table.head.type', 'code': 'type' },
+                { 'title': 'table.head.size', 'code': 'size' },
+                { 'title': 'table.head.owner', 'code': 'owner' },
+                { 'title': 'table.head.modified', 'code': 'modified' }
+            ] %}
+            {% for header in headers %}
+                <th class="table__item table__item--head">
+                    <a href="{{ path('storage:index', {'uuid': app.request.get('uuid'), 'sort': header.code}) }}" class="table__sort">{{ header.title | trans({}, 'storage') }}</a>
+                </th>
+            {% endfor %}
+            <th class="table__item table__item--head table__item--icon">
+                <svg width="24" height="24"><use xlink:href="#svg-menu"></use></svg>
+            </th>
+        </tr>
+        </thead>
+        <tbody class="table__body">
+        {% for row in rows %}
+            <tr class="table__row{% if row.storage.isDirectory %} table__row--alt{% endif %}">
+                <td class="table__item">
+                    <div class="checkbox checkbox--table">
+                        <label class="checkbox__label checkbox__label--table">
+                            <input type="checkbox" class="checkbox__input" data-toggle="table-select">
+                        </label>
+                    </div>
+                </td>
+                <td class="table__item">
+        <span class="table-item__title">
+            {% if row.storage.isDirectory %}
+                <a href="{{ path('storage:index', {'uuid': row.uuid}) }}">{{ row.storage.title }}</a>
+            {% else %}
+                <a href="{{ path('storage:edit', {'uuid': row.storage.uuid}) }}" data-ajax="false">{{ row.storage.title }}</a>
+            {% endif %}
+            <span class="text text--muted">{{ row.storage.description }}</span>
+        </span>
+                </td>
+                <td class="table__item">
+                    {% if row.storage.isDirectory %}
+                        {{ 'type.folder' | trans({}, 'storage') }}
+                    {% else %}
+                        {% if row.storage.file is not null %}
+                            {{ row.storage.file.type }}
+                        {% else %}
+                            <em>{{ 'general.not_available' | trans }}</em>
+                        {% endif %}
+                    {% endif %}
+                </td>
+                <td class="table__item">
+                    {% if not row.storage.isDirectory %}
+                        {% if row.storage.file is not null %}
+                            {{ row.storage.file.size | size }}
+                        {% else %}
+                            <em>{{ 'general.not_available' | trans }}</em>
+                        {% endif %}
+                    {% endif %}
+                </td>
+                <td class="table__item">
+                    {% if row.storage.workflow is not null and row.storage.workflow.updated is not null %}
+                        {{ row.storage.workflow.updated.fullName }}
+                    {% else %}
+                        <em>{{ 'general.not_available' | trans }}</em>
+                    {% endif %}
+                </td>
+                <td class="table__item">
+                    {% if row.storage.workflow is not null %}
+                        {{ row.storage.workflow.updatedAt | date }}
+                    {% else %}
+                        <em>{{ 'general.not_available' | trans }}</em>
+                    {% endif %}
+                </td>
+                <td class="table__item table__item--dropdown">
+                    <div class="dropdown dropdown--table">
+                        <a class="dropdown__toggle dropdown__toggle--icon" data-toggle="dropdown">
+                            <svg width="24" height="24"><use xlink:href="#svg-menu"></use></svg>
+                        </a>
+                        <ul class="dropdown__menu dropdown__menu--right">
+                            {% set s = row.storage %}
+                            {% set items = [
+                                [['context.menu.open', path('storage:index', {'uuid': row.uuid}), s.isDirectory]],
+                                [
+                                    ['context.menu.edit', path('storage:edit', {'uuid': s.uuid})],
+                                    ['context.menu.privileges', path('storage:access', {'uuid': s.uuid})],
+                                ],
+                                [['context.menu.download', path('storage:download', {'uuid': s.uuid}), not s.isDirectory]],
+                                [['context.menu.delete', path('storage:delete', {'uuid': row.uuid})]]
+                            ] %}
+                            {% for group in items %}
+                                {% set counter = 0 %}
+                                {% for item in group %}
+                                    {% if item[2] is not defined or item[2] %}
+                                        {% set counter = counter + 1 %}
+                                        <li class="dropdown__item">
+                                            <a href="{{ item[1] }}" class="dropdown__link">{{ item[0] | trans({}, 'storage') }}</a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if not loop.last and counter > 0 %}
+                                    <li class="dropdown__item dropdown__item--divider"></li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block spreadsheet_pagination %}
+    {{ include('pagination.html.twig', {
+        'paginator': rows,
+        'path': 'storage:index',
+        'params': {'uuid': app.request.get('uuid')}
+    }) }}
+{% endblock %}
+
+{% block toolbar_buttons %}
+    <div class="btn-group" role="group">
+        <div class="btn-group__item">
+            <a class="btn btn--default" href="{{ path('storage:upload', {'uuid': node.uuid}) }}" data-ajax="false" data-toggle="uploader">
+                {{ 'toolbar.btn.upload' | trans({}, 'storage') }}
+            </a>
+        </div>
+        <div class="btn-group__item">
+            <a class="btn btn--default" href="{{ path('storage:new', {'uuid': node.uuid}) }}" data-ajax="false">
+                {{ 'toolbar.btn.new_folder' | trans({}, 'storage') }}
+            </a>
+        </div>
+    </div>
+    <div class="btn-group" role="group">
+        <div class="btn-group__item">
+            <a class="btn btn--default btn--icon btn--disabled" href="{{ path('storage:access', {'uuid': node.uuid}) }}">
+                <svg width="24" height="24"><use xlink:href="#svg-lock"></use></svg>
+            </a>
+        </div>
+    </div>
+    <div class="btn-group" role="group">
+        <div class="btn-group__item">
+            <a class="btn btn--default btn--icon btn--disabled" href="{{ path('storage:delete', {'uuid': node.uuid}) }}">
+                <svg width="24" height="24"><use xlink:href="#svg-delete"></use></svg>
+            </a>
+        </div>
+        <div class="btn-group__item">
+            <a class="btn btn--default btn--icon" href="{{ path('storage:index', {'uuid': node.uuid}) }}" data-history="false">
+                <svg width="24" height="24"><use xlink:href="#svg-refresh"></use></svg>
+            </a>
+        </div>
+    </div>
+{% endblock %}

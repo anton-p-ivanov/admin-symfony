@@ -1,0 +1,53 @@
+form:
+    storage:
+        title:
+            label: Title
+            help: Maximum 250 characters are allowed.
+        description:
+            label: Description
+            help: Maximum 1000 characters are allowed.
+        content:
+            label: Content
+            help: Maximum 5000 characters are allowed.
+        categories:
+            label: Categories
+            help: Select one or more categories with Ctrl + Left Mouse Click.
+        node:
+            label: Parent folder
+            help: Select a parent folder where an element should be placed.
+        status:
+            label: Workflow status
+    file:
+        title:
+            label: File name
+            help: Valid file name with extension
+        options:
+            label: Modifications
+            use_translit: Use translit for non-latin symbols
+            replace_with_underscore: Replace spaces with underscores
+tabs:
+    properties: Properties
+    permissions: Permissions
+    versions: Versions
+storage:
+    free_space: Free {free} of {total}
+type:
+    folder: < FOLDER >
+toolbar:
+    btn:
+        upload: Upload
+        new_folder: New folder
+table:
+    head:
+        file_folder: File/Folder
+        type: Type
+        size: Size
+        owner: Owner
+        modified: Modified
+context:
+    menu:
+        open: Open
+        edit: Edit
+        privileges: Permissions
+        download: Download
+        delete: Delete
