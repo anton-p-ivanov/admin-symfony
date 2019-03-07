@@ -1,19 +1,19 @@
 [
   {
     "code": "DRAFT",
-    "title": "Черновик",
+    "title": "Draft",
     "isDefault": true,
     "sort": 100
   },
   {
     "code": "READY",
-    "title": "Готов к публикации",
+    "title": "Ready to be published",
     "isDefault": false,
     "sort": 200
   },
   {
     "code": "PUBLISHED",
-    "title": "Опубликован",
+    "title": "Published",
     "isDefault": false,
     "sort": 300
   }

@@ -1,17 +1,17 @@
 [
   {
     "code": "ROLE_USER",
-    "title": "Зарегистрированный пользователь",
+    "title": "Registered user",
     "isDefault": true
   },
   {
     "code": "ROLE_MANAGER",
-    "title": "Управляющий",
+    "title": "Content manager",
     "isDefault": false
   },
   {
     "code": "ROLE_ADMIN",
-    "title": "Администратор",
+    "title": "Administrator",
     "isDefault": false
   }
 ]
