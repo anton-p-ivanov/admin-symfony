@@ -17,6 +17,7 @@ Encore
     .addEntry('form', './assets/js/form.js')
     .addEntry('profile', './assets/js/profile.js')
     .addEntry('spreadsheet', './assets/js/spreadsheet.js')
+    .addEntry('storage', './assets/js/storage.js')
     .addEntry('uploader', './assets/js/uploader.js')
 
     // empty the outputPath dir before each build
