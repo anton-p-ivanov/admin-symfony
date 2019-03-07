@@ -147,7 +147,7 @@
         }
 
         &:checked {
-            @include checkbox-svg(true, $color-primary);
+            @include checkbox-svg(true, $color-black);
 
             &:disabled {
                 @include checkbox-svg(true, $color-gray-medium);
@@ -169,7 +169,7 @@
         }
 
         &:checked {
-            @include radio-svg(true, $color-primary);
+            @include radio-svg(true, $color-black);
 
             &:disabled {
                 @include radio-svg(true, $color-gray-medium);

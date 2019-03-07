@@ -24,11 +24,15 @@
         &--alt {
             background-color: $color-gray-light;
         }
+
+        &--selected {
+            background-color: lighten($color-info, 50%);
+        }
     }
 
     &__item {
         text-align: left;
-        padding: .5rem 1rem;
+        padding: .625rem 1rem;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;

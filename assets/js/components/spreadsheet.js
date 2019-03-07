@@ -62,6 +62,8 @@
                     spreadsheet.target.querySelector('thead input[data-toggle]').checked = (
                         checkboxes.length === [].filter.call(checkboxes, (el) => { return el.checked; }).length
                     );
+
+                    input.closest('tr').classList.toggle('table__row--selected', input.checked);
                 }
 
                 return;
