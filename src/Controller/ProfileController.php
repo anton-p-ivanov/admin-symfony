@@ -2,15 +2,19 @@
 
 namespace App\Controller;
 
+use App\Entity\User\User;
 use App\Form\Profile as Type;
 use App\Service\Profile as Profile;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -22,6 +26,21 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class ProfileController extends AbstractController
 {
+    /**
+     * @var EventDispatcherInterface
+     */
+    private $eventDispatcher;
+
+    /**
+     * AccountController constructor.
+     *
+     * @param EventDispatcherInterface $dispatcher
+     */
+    public function __construct(EventDispatcherInterface $dispatcher)
+    {
+        $this->eventDispatcher = $dispatcher;
+    }
+
     /**
      * @Route("/login", name="profile:login")
      * @Template("profile/login.html.twig")
@@ -54,7 +73,10 @@ class ProfileController extends AbstractController
      *
      * @return Response
      */
-    public function register(Request $request, Profile\RegisterService $service, TranslatorInterface $translator): Response
+    public function register(
+        Request $request,
+        Profile\RegisterService $service,
+        TranslatorInterface $translator): Response
     {
         $form = $this->createForm(Type\RegisterType::class);
         $form->handleRequest($request);
@@ -89,7 +111,8 @@ class ProfileController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($service->confirm($form)) {
-                return $this->redirectToRoute('profile:login', ['username' => $form->get('username')->getNormData()]);
+                $this->authorize($service->getUser(), $request);
+                return $this->redirectToRoute('dashboard:home');
             }
         }
 
@@ -148,5 +171,20 @@ class ProfileController extends AbstractController
         return $this->render('profile/password.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @param User $user
+     * @param Request $request
+     */
+    protected function authorize(User $user, Request $request)
+    {
+        $token = new UsernamePasswordToken($user, null, 'main', ['USER']);
+        $this->get('security.token_storage')->setToken($token);
+        $this->get('session')->set('_security_main', serialize($token));
+
+        // Fire the login event manually
+        $event = new InteractiveLoginEvent($request, $token);
+        $this->eventDispatcher->dispatch("security.interactive_login", $event);
     }
 }
