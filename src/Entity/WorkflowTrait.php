@@ -25,7 +25,12 @@ trait WorkflowTrait
     private $status;
 
     /**
-     * Cloning ...
+     * @var \DateTime
+     */
+    private $updatedAt;
+
+    /**
+     * Clone method
      */
     public function __clone()
     {
@@ -33,18 +38,50 @@ trait WorkflowTrait
     }
 
     /**
-     * @return Workflow|null
+     * @return Workflow
      */
-    public function getWorkflow(): ?Workflow
+    public function getWorkflow(): Workflow
     {
-        return $this->workflow;
+        return $this->workflow ?? new Workflow();
     }
 
     /**
-     * @param Workflow|null $workflow
+     * @param Workflow $workflow
      */
-    public function setWorkflow(?Workflow $workflow): void
+    public function setWorkflow(Workflow $workflow): void
     {
         $this->workflow = $workflow;
+    }
+
+    /**
+     * @return WorkflowStatus|null
+     */
+    public function getStatus(): ?WorkflowStatus
+    {
+        return $this->getWorkflow()->getStatus();
+    }
+
+    /**
+     * @param WorkflowStatus $status
+     */
+    public function setStatus(WorkflowStatus $status): void
+    {
+        $this->getWorkflow()->setStatus($status);
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getUpdatedAt(): ?\DateTime
+    {
+        return $this->getWorkflow()->getUpdatedAt();
+    }
+
+    /**
+     * @param string $updatedAt
+     */
+    public function setUpdatedAt(string $updatedAt): void
+    {
+        $this->getWorkflow()->setUpdatedAt((new \DateTime())->setTimestamp((int) $updatedAt));
     }
 }
