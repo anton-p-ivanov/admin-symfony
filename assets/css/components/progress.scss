@@ -1,0 +1,35 @@
+@import "../includes/variables";
+
+.progress {
+    width: 100%;
+    position: relative;
+    display: block;
+    height: 2rem;
+    line-height: 2rem;
+    background-color: $color-gray-light;
+    margin-bottom: 1rem;
+    z-index: 0;
+
+    &__bar {
+        position: absolute;
+        z-index: 50;
+        display: block;
+        height: 100%;
+        background-color: $color-gray-medium;
+        padding: 0 1rem;
+        transition: width .25s ease-in-out;
+
+        &--success {
+            background-color: lighten($color-success, 25%);
+        }
+    }
+
+    &__text {
+        position: absolute;
+        z-index: 100;
+        display: block;
+        height: 100%;
+        width: 100%;
+        padding: 0 1rem;
+    }
+}

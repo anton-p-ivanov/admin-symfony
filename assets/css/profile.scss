@@ -1,4 +1,3 @@
-@import "components/modal";
 @import "components/alert";
 @import "components/forms";
 @import "components/buttons";
@@ -10,6 +9,19 @@
     height: 100%;
     width: 100%;
     padding: 2rem 0;
+}
+
+.modal {
+    &__header {
+        padding: 1rem;
+        background-color: white;
+        border-bottom: solid 1px $color-gray-light;
+    }
+
+    &__body {
+        padding: 1rem;
+        background-color: white;
+    }
 }
 
 .modal--login,

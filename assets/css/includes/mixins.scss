@@ -6,7 +6,15 @@
     @if $state {
         background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M21 3H3v18h18V3zM10 17l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="#{$color}" shape-rendering="crispEdges"/></svg>');
     } @else {
-        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 5v14H5V5h14m2-2H3v18h18V3z" fill="#{$color}" shape-rendering="crispEdges"/></svg>');
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" fill="#{$color-white}" /><path d="M19 5v14H5V5h14m2-2H3v18h18V3z" fill="#{$color}" shape-rendering="crispEdges"/></svg>');
+    }
+}
+
+@mixin radio-svg($state, $color) {
+    @if $state {
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#{$color-white}"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z" fill="#{$color}"/><circle cx="12" cy="12" r="5" fill="#{$color}"/></svg>');
+    } @else {
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#{$color-white}"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z" fill="#{$color}"/></svg>');
     }
 }
 
@@ -16,5 +24,47 @@
     }
     @else {
         background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z" fill="#{$color-gray-dark}"/></svg>');
+    }
+}
+
+@mixin scrollbar() {
+
+    /* width */
+    &::-webkit-scrollbar {
+        width: 1.5rem;
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-track-piece {
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M8 0 H 16 V 24 H 8 Z" fill="#{$color-gray-light}"/></svg>');
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M8 0 H 16 V 24 H 8 Z" fill="#{$color-gray-medium}"/></svg>');
+    }
+
+    /* Handle on hover */
+    &::-webkit-scrollbar-thumb:hover {
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M8 0 H 16 V 24 H 8 Z" fill="#{$color-gray-dark}"/></svg>');
+    }
+
+    &::-webkit-scrollbar-button {
+        height: 1.5rem;
+        width: 1.5rem;
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+
+        &:start {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M12 8l-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z" fill="#{$color-gray-dark}"/></svg>');
+        }
+
+        &:end {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z" fill="#{$color-gray-dark}"/></svg>');
+        }
     }
 }

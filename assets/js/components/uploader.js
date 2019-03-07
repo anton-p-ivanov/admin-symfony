@@ -135,7 +135,7 @@
         }
 
         // Start upload selected file
-        // upload(chunks);
+        upload(chunks);
     };
 
     /**

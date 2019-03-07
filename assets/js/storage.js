@@ -1,0 +1,1 @@
+require('../css/storage.scss');

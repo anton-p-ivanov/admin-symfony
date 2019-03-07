@@ -1,0 +1,26 @@
+@import "spreadsheet";
+@import "components/progress";
+
+input[type="file"] {
+    display: none;
+}
+
+.file {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    line-height: 2rem;
+
+    &__name {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    &__status {
+        flex: 0 0 100px;
+        text-align: right;
+        white-space: nowrap;
+        font-size: $font-size-sm;
+    }
+}

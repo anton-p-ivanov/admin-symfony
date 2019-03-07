@@ -40,6 +40,36 @@ a {
     }
 }
 
+p {
+    margin: 0 0 1rem;
+}
+
+h1, h2, h3 {
+    margin: 0 0 1rem;
+    font-weight: normal;
+}
+
+h1 {
+    font-size: 1.5rem;
+}
+
+h2 {
+    font-size: 1.25rem;
+}
+
+h3 {
+    font-size: 1rem;
+}
+
+hr {
+    display: block;
+    height: 1px;
+    overflow: hidden;
+    border: none;
+    background-color: $color-gray-medium;
+    margin: 1rem 0;
+}
+
 .page {
     &__header {
         height: 3.5rem;
@@ -89,5 +119,11 @@ a {
 
     &__group {
         padding: 0;
+    }
+}
+
+.text {
+    &--muted {
+        color: $color-gray-medium;
     }
 }
