@@ -33,7 +33,11 @@
     </div>
     <div class="pagination__position">
         {% if paginator.resultsTotal > 0 %}
-        Elements {{ paginator.firstIndex }} &mdash; {{ paginator.lastIndex }} of {{ paginator.resultsTotal }} are shown
+            {{ 'pagination.position' | trans({
+                '{first}': paginator.firstIndex,
+                '{last}': paginator.lastIndex,
+                '{total}': paginator.resultsTotal
+            }, 'pagination') }}
         {% endif %}
     </div>
 </div>

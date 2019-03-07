@@ -1,0 +1,2 @@
+pagination:
+    position: Elements {first} &mdash; {last} of {total} are shown
