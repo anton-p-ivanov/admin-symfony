@@ -52,7 +52,7 @@
             .then((html) => {
                 container.innerHTML = html;
                 if (push) {
-                    history.pushState({'container': '#' + id}, null, url);
+                    history.pushState({'container': id}, null, url);
                 }
             });
     };
@@ -84,7 +84,7 @@
 
                 // Saving initial page state if empty
                 if (enableHistory && !history.state) {
-                    history.replaceState({'container': '#' + container.id}, null, location.href);
+                    history.replaceState({'container': container.id}, null, location.href);
                 }
 
                 // Fetching page content
@@ -109,6 +109,7 @@
         if (state && state.container) {
             pjax.load(state.container, location.href, false);
         }
+
     };
 
     /**
