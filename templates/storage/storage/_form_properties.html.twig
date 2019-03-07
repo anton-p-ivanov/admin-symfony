@@ -1,0 +1,12 @@
+{{ form_row(form.title, {'attr': {'autofocus': true}}) }}
+<div class="grid">
+    <div class="grid__column">
+        {{ form_row(form.description) }}
+        {{ form_row(form.content) }}
+    </div>
+    <div class="grid__column">
+        {{ form_row(form.categories) }}
+        {{ form_row(form.parent) }}
+        {{ form_row(form.status) }}
+    </div>
+</div>

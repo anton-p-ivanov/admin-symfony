@@ -1,0 +1,48 @@
+{% extends 'main.html.twig' %}
+
+{% block title %}File storage / Edit an element{% endblock %}
+
+{% block content %}
+
+    {% set nav = [
+        ['tabs.properties', 'properties'],
+        ['tabs.permissions', 'permissions'],
+        ['tabs.versions', 'versions', storage.uuid ? path('storage:versions:index', {'uuid': storage.uuid}) : null],
+    ] %}
+    {{ form_start(form) }}
+    <div class="tabs">
+        <ul class="tabs__nav">
+            {% for item in nav %}
+                <li class="tabs__item">
+                    <a class="tabs__link{% if loop.first %} tabs__link--active{% endif %}" href="{{ item[2] is defined and item[2] ? item[2] : '#' ~ item[1] }}" data-toggle="tab" data-target="#{{ item[1] }}"{% if item[2] is defined and item[2] %} data-remote="true"{% endif %}>{{ item[0] | trans({}, 'storage') }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+        <div class="tabs__panels">
+            {% for item in nav %}
+                <div class="tabs__panel{% if loop.first %} tabs__panel--active{% endif %}" id="{{ item[1] }}"{% if item[2] is defined %} data-ajax="true" data-history="false"{% endif %}>
+                    {{ include('/storage/storage/_form_' ~ item[1] ~ '.html.twig') }}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="tabs__footer">
+            {{ form_widget(form.save) }}
+            {{ form_widget(form.apply) }}
+            <a href="{{ path('storage:index', {'uuid': storage.parent.uuid}) }}" class="btn btn--default">
+                {{ 'form.button.cancel' | trans }}
+            </a>
+        </div>
+    </div>
+    {{ form_end(form) }}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('form') }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('form') }}
+{% endblock %}

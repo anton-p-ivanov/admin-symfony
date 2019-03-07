@@ -3,6 +3,7 @@
 namespace App\Controller\Storage;
 
 use App\Entity\Storage as Storage;
+use App\Form\Storage\StorageType;
 use App\Tools\Paginator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation as Http;
@@ -66,14 +67,36 @@ class StorageController extends AbstractController
         ]);
     }
 
+
     /**
      * @Route("/{uuid}/edit", name="storage:edit", methods={"GET","POST"})
      *
+     * @param Http\Request $request
+     * @param Storage\Storage $storage
+     *
      * @return Http\Response
      */
-    public function edit(): Http\Response
+    public function edit(Http\Request $request, Storage\Storage $storage): Http\Response
     {
-        return new Http\Response();
+        /* @var $form \Symfony\Component\Form\Form */
+        $form = $this->createForm(StorageType::class, $storage);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager = $this->getDoctrine()->getManager();
+            $manager->getRepository(Storage\Tree::class)->setTreeNode($storage);
+
+            if ($form->get('apply')->isClicked()) {
+                return $this->redirectToRoute('storage:edit', ['uuid' => $storage->getUuid()]);
+            }
+
+            return $this->redirectToRoute('storage:index', ['uuid' => $storage->getParent()->getUuid()]);
+        }
+
+        return $this->render('storage/storage/edit.html.twig', [
+            'storage' => $storage,
+            'form' => $form->createView(),
+        ]);
     }
 
     /**

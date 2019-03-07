@@ -1,0 +1,21 @@
+{{ form_start(form, {
+    'action': path('storage:versions:edit', {'uuid': version.uuid}),
+    'attr': {
+        'data-container': '#versions',
+        'data-url': path('storage:versions:index', {'uuid': version.storage.uuid}),
+        'novalidate': true
+    }
+}) }}
+    <div class="modal__header">
+        <span>File rename</span>
+        <svg width="24" height="24" data-dismiss="modal"><use xlink:href="#svg-close"></use></svg>
+    </div>
+    <div class="modal__body modal__body--form">
+        {{ form_row(form.name, {'attr': {'autofocus': true}}) }}
+        {{ form_row(form.options) }}
+    </div>
+    <div class="modal__footer">
+        {{ form_widget(form.cancel) }}
+        {{ form_widget(form.save) }}
+    </div>
+{{ form_end(form) }}

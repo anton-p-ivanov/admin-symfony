@@ -1,0 +1,17 @@
+<div class="grid">
+    <div class="grid__column">
+        <h2>User roles</h2>
+        <hr />
+        {{ form_row(form.roles, {label: false}) }}
+        <button type="button" class="btn btn--default" data-toggle="selection" data-target="#{{ form.roles.vars.id }}">
+            {{ 'form.button.selection' | trans() }}
+        </button>
+    </div>
+    <div class="grid__column">
+        <h2>Access requests</h2>
+        <hr />
+        <p><em>No access requests found.</em></p>
+        <p>This block contains a list of requests from users to access this file. As soon as one of the users
+            sends an access request it will be displayed in this list.</p>
+    </div>
+</div>
