@@ -45,7 +45,8 @@
      */
     let eventHandler = function (event) {
 
-        let toggle = event.target;
+        let toggle = event.target,
+            watchers = document.querySelectorAll('[data-watch="checked"]');
 
         while (toggle !== document) {
             let input = toggle.closest('input[data-toggle]');
@@ -65,6 +66,16 @@
 
                     input.closest('tr').classList.toggle('table__row--selected', input.checked);
                 }
+
+                [].forEach.call(watchers, (el) => {
+                    let state = [].filter.call(checkboxes, (el) => { return el.checked; }).length === 0;
+
+                    // Set disabled class
+                    el.classList.toggle('btn--disabled', state);
+
+                    // Set disabled state
+                    el.dataset.disabled = state.toString();
+                });
 
                 return;
             }
