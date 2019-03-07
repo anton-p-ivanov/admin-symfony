@@ -1,0 +1,67 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="page__header">
+        <div class="header">
+            <div class="header__title">
+                Resource Management Application
+            </div>
+            <div class="header__nav">
+                <div class="navbar">
+                    <div class="navbar__group">
+                        <div class="dropdown dropdown--navbar">
+                            <a class="dropdown__toggle" href="#" data-toggle="dropdown">
+                                <span>Section Alpha</span>
+                                <svg width="24" height="24"><use xlink:href="#svg-dropdown-toggle"></use></svg>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="navbar__group">
+                        <div class="dropdown dropdown--navbar">
+                            <a class="dropdown__toggle" href="#" data-toggle="dropdown">
+                                <span>Section Beta</span>
+                                <svg width="24" height="24"><use xlink:href="#svg-dropdown-toggle"></use></svg>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="navbar__group">
+                        <div class="dropdown dropdown--navbar">
+                            <a class="dropdown__toggle" href="#" data-toggle="dropdown">
+                                <span>{{ app.user.fullName }}</span>
+                                <svg width="24" height="24"><use xlink:href="#svg-dropdown-toggle"></use></svg>
+                            </a>
+                            <ul class="dropdown__menu dropdown__menu--right">
+                                <li class="dropdown__item">
+                                    <a href="#" class="dropdown__link">Dropdown item 1</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="#" class="dropdown__link">Dropdown item 2</a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a href="#" class="dropdown__link">Dropdown item with long text</a>
+                                </li>
+                                <li class="dropdown__item dropdown__item--divider"></li>
+                                <li class="dropdown__item">
+                                    <a href="#" class="dropdown__link">Dropdown item 4</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page__content">
+        <h1 class="page__title">{% block title %}Page title{% endblock %}</h1>
+        {% block content %}Page content{% endblock %}
+    </div>
+    <div class="page__footer">
+        © {{ 'now' | date('Y') }}, ЗАО "Аладдин Р.Д.". Все права защищены.
+        PHP {{ constant('PHP_MAJOR_VERSION') }}.{{ constant('PHP_MINOR_VERSION') }}.{{ constant('PHP_RELEASE_VERSION') }}
+    </div>
+    {% block modals %}
+        <div class="modal-backdrop"></div>
+        <div class="modal"></div>
+    {% endblock %}
+    {{ include('main.icons.html.svg') }}
+{% endblock %}
