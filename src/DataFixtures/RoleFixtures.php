@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\Role;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Faker\Factory;
 
 /**
  * Class RoleFixtures
@@ -14,6 +15,19 @@ use Doctrine\Common\Persistence\ObjectManager;
 class RoleFixtures extends Fixture
 {
     /**
+     * @var \Faker\Generator
+     */
+    private $faker;
+
+    /**
+     * TrainingFixtures constructor.
+     */
+    public function __construct()
+    {
+        $this->faker = Factory::create();
+    }
+
+    /**
      * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
@@ -22,6 +36,7 @@ class RoleFixtures extends Fixture
 
         foreach ($roles as $attributes) {
             $role = new Role();
+            $role->setDescription($this->faker->text(100));
             foreach ($attributes as $name => $value) {
                 $role->{'set' . ucfirst($name)}($value);
             }
