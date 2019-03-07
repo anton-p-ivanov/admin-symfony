@@ -14,8 +14,10 @@ Encore
 
     // uncomment to define the assets of the project
     .addEntry('app', './assets/js/app.js')
-    .addEntry('grid', './assets/js/grid.js')
+    .addEntry('form', './assets/js/form.js')
     .addEntry('profile', './assets/js/profile.js')
+    .addEntry('spreadsheet', './assets/js/spreadsheet.js')
+    .addEntry('uploader', './assets/js/uploader.js')
 
     // empty the outputPath dir before each build
     .cleanupOutputBeforeBuild()
