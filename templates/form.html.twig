@@ -10,6 +10,11 @@
     {{ parent() }}
 {% endblock form_widget_simple %}
 
+{% block textarea_widget -%}
+    {% set attr = attr|merge({'class': (attr.class|default('') ~ ' form__input form__input--text')|trim}) %}
+    {{ parent() }}
+{%- endblock textarea_widget -%}
+
 {% block form_label %}
     {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' form__label')|trim}) %}
     {% if required %}
@@ -39,3 +44,54 @@
         {{- form_help(form) -}}
     </div>
 {% endblock form_row %}
+
+{% block form_help -%}
+    {%- if help is not empty -%}
+        {%- set help_attr = help_attr|merge({class: (help_attr.class|default('') ~ ' form__help')|trim}) -%}
+        <div {% with { attr: help_attr } %}{{ block('attributes') }}{% endwith %}>
+            {%- if translation_domain is same as(false) -%}
+                {{- help -}}
+            {%- else -%}
+                {{- help|trans({}, translation_domain) -}}
+            {%- endif -%}
+        </div>
+    {%- endif -%}
+{%- endblock form_help %}
+
+{%- block choice_widget_collapsed -%}
+    {% set class = multiple ? 'form__input--select-multiple' : 'form__input--select' %}
+    {% set attr = attr|merge({'class': (attr.class|default('') ~ ' form__input ' ~ class)|trim}) %}
+    {{ parent() }}
+{%- endblock choice_widget_collapsed -%}
+
+{% block choice_widget_expanded -%}
+    <div {{ block('widget_container_attributes') }}>
+        {%- for child in form %}
+            {{- form_widget(child) -}}
+        {% endfor -%}
+    </div>
+{%- endblock choice_widget_expanded %}
+
+{% block checkbox_widget -%}
+    {% if attr.help is defined %}
+        {% set help = attr.help %}
+    {% endif %}
+    {% set attr = attr|merge({'class': (attr.class|default('') ~ ' checkbox__input')|trim, 'help': false}) %}
+    <div class="checkbox">
+        {{ parent() }}
+        <label class="checkbox__label" for="{{ form.vars.id }}">
+            {{ label }}
+            {% if help is defined %}
+                <div class="checkbox__help">{{ help }}</div>
+            {% endif %}
+        </label>
+    </div>
+{%- endblock checkbox_widget %}
+
+{% block radio_widget -%}
+    {% set attr = attr|merge({'class': (attr.class|default('') ~ ' radio__input')|trim}) %}
+    <div class="radio">
+        {{ parent() }}
+        <label class="radio__label" for="{{ form.vars.id }}">{{ label }}</label>
+    </div>
+{%- endblock radio_widget %}
