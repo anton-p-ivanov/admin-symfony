@@ -86,16 +86,24 @@
             overflow: hidden;
             background-color: $color-gray-medium;
         }
+
+        &--disabled {
+            color: $color-gray-medium;
+        }
     }
 
-    &__link {
+    &__link,
+    &__span {
         display: block;
         padding: .25rem 1rem;
         background-color: transparent;
         color: inherit;
         transition: background-color .1s ease-in-out, color .1s ease-in-out;
         white-space: nowrap;
+        cursor: pointer;
+    }
 
+    &__link {
         &:hover {
             text-decoration: none;
             color: $color-white;

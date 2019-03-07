@@ -1,14 +1,64 @@
 @import "../includes/variables";
 
+.no-scroll {
+    overflow: hidden;
+}
+
 .modal {
-    &__header {
+    position: fixed;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    @each $property in (top, right, bottom, left) {
+        #{$property}: 0;
+    }
+    z-index: 1100;
+
+    &.modal__active {
+        display: flex;
+    }
+
+    &__container {
+        min-width: 500px;
+        background-color: $color-white;
+    }
+
+    &__header,
+    &__footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         padding: 1rem;
-        background-color: white;
-        border-bottom: solid 1px $color-gray-light;
+    }
+
+    &__header {
+        border-bottom: solid 2px $color-gray-medium;
+    }
+
+    &__footer {
+        border-top: solid 1px $color-gray-medium;
     }
 
     &__body {
         padding: 1rem;
-        background-color: white;
+
+        &--form {
+            background-color: $color-gray-light;
+        }
+    }
+}
+
+.modal-backdrop {
+    display: none;
+    position: fixed;
+    @each $property in (top, right, bottom, left) {
+        #{$property}: 0;
+    }
+    z-index: 1000;
+    opacity: .5;
+    background-color: $color-black;
+
+    &.modal-backdrop__active {
+        display: block;
     }
 }

@@ -11,6 +11,13 @@
         border-bottom: solid 2px $color-gray-medium;
     }
 
+    &__body {
+        &--panel {
+            background-color: $color-white;
+            border: solid 1px $color-gray-medium;
+        }
+    }
+
     &__row {
         border-bottom: solid 1px $color-gray-medium;
 
@@ -25,6 +32,14 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+
+        &--center {
+            text-align: center;
+        }
+
+        &--right {
+            text-align: right;
+        }
 
         &--head {
             font-weight: 500;

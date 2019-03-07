@@ -1,0 +1,16 @@
+@import "../includes/variables";
+
+.panel {
+    margin-bottom: 1rem;
+    border: solid 1px $color-gray-medium;
+
+    &__header {
+        padding: .625rem 1rem;
+        background-color: $color-gray-light;
+        border-bottom: solid 1px $color-gray-medium;
+    }
+
+    &__body {
+        padding: 1rem;
+    }
+}

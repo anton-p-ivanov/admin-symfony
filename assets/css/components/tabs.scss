@@ -1,0 +1,63 @@
+@import "../includes/variables";
+
+$border-width: 2px;
+
+.tabs {
+    &__nav {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        border-bottom: solid $border-width $color-gray-medium;
+    }
+
+    &__item {
+        margin-bottom: -$border-width;
+        //margin-right: -$border-width;
+    }
+
+    &__link {
+        display: block;
+        padding: .625rem 1rem;
+        line-height: 1;
+        border: solid $border-width transparent;
+        background-color: transparent;
+        color: $color-gray-dark;
+        text-decoration: none;
+        transition: background-color .2s ease-in-out, color .2s ease-in-out;
+
+        &--active,
+        &:hover,
+        &:active,
+        &:focus {
+            color: $color-black;
+            text-decoration: none;
+        }
+
+        &--active {
+            background-color: $color-gray-light;
+            border-color: $color-gray-medium;
+            border-bottom-color: $color-gray-light;
+        }
+    }
+
+    &__panels {
+        border: solid $border-width $color-gray-medium;
+        border-top: 0;
+        background-color: $color-gray-light;
+        position: relative;
+        padding: 1rem;
+    }
+
+    &__panel {
+        display: none;
+
+        &--active {
+            display: block;
+        }
+    }
+
+    &__footer {
+        padding: 1rem 0;
+    }
+}
