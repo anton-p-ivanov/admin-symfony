@@ -104,7 +104,7 @@ import uploader from "./components/uploader";
         let options = {
             'method': 'PUT',
             'body': JSON.stringify({
-                'name': data.name,
+                'name': data.name.replace(/\.[\d]{10,}$/, ''),
                 'size': data.size,
                 'type': data.type,
                 'hash': data.hash,
