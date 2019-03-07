@@ -380,4 +380,12 @@ class User implements UserInterface, EquatableInterface, \Serializable
     {
         /* @todo Implementation needed */
     }
+
+    /**
+     * @return string
+     */
+    public function getFullName(): string
+    {
+        return trim($this->fname . ' ' . $this->lname);
+    }
 }
