@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="workflow")
+ * @ORM\EntityListeners({"App\Listener\Workflow\WorkflowListener"})
  * @ORM\Entity()
  */
 class Workflow
