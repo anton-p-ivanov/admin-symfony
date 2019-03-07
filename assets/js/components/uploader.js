@@ -115,7 +115,7 @@
             const TOTAL_SIZE = file.size;
 
             let start = 0,
-                end = CHUNK_SIZE;
+                end = TOTAL_SIZE < CHUNK_SIZE ? TOTAL_SIZE : CHUNK_SIZE;
 
             while (start < TOTAL_SIZE) {
                 chunks.push({
@@ -124,7 +124,6 @@
                     'end': end,
                     'total': TOTAL_SIZE,
                     'name': file.name + '.' + file.lastModified,
-                    // 'timestamp': ,
                     'type': file.type
                 });
 
