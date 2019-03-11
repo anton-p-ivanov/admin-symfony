@@ -5,6 +5,7 @@ form:
         cancel: Cancel
         selection: Toggle selection
         close: Close
+        confirm: Confirm
     placeholder:
         email: john.smith@email.com
         first_name: John

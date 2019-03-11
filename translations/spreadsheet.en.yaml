@@ -6,3 +6,8 @@ toolbar:
             title: Search
         apply:
             title: Apply filter
+form:
+    confirm:
+        title: 'Confirm required'
+        password:
+            label: Please confirm action by typing your password

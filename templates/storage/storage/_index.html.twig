@@ -158,7 +158,7 @@
     </div>
     <div class="btn-group" role="group">
         <div class="btn-group__item">
-            <a class="btn btn--default btn--icon btn--disabled" href="{{ path('storage:delete', {'uuid': node.uuid}) }}" data-disabled="true" data-watch="checked" data-toggle="confirm">
+            <a class="btn btn--default btn--icon btn--disabled" href="{{ path('storage:delete', {'uuid': node.uuid}) }}" data-disabled="true" data-watch="checked" data-toggle="modal" data-target="#confirm-modal">
                 <svg width="24" height="24"><use xlink:href="#svg-delete"></use></svg>
             </a>
         </div>

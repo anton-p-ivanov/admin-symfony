@@ -1,0 +1,18 @@
+{{ form_start(form, {
+    'attr': {
+        'data-container': '#spreadsheet',
+        'novalidate': true
+    }
+}) }}
+    <div class="modal__header">
+        <span>{{ 'form.confirm.title' | trans }}</span>
+        <svg width="24" height="24" data-dismiss="modal"><use xlink:href="#svg-close"></use></svg>
+    </div>
+    <div class="modal__body modal__body--form">
+        {{ form_row(form.password, {'attr': {'autofocus': true}}) }}
+    </div>
+    <div class="modal__footer">
+        {{ form_widget(form.cancel) }}
+        {{ form_widget(form.confirm) }}
+    </div>
+{{ form_end(form) }}

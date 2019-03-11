@@ -21,6 +21,11 @@
 
 {% endblock %}
 
+{% block modals %}
+    {{ parent() }}
+    <div class="modal" id="confirm-modal">
+        <div class="modal__container modal__container--confirm"></div>
+    </div>
 {% endblock %}
 
 {% block javascripts %}

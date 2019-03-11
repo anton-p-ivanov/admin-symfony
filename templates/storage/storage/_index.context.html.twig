@@ -30,7 +30,9 @@
             "title": 'context.menu.delete',
             "url": path('storage:delete', {'uuid': row.uuid}),
             "attr": {
-                'data-toggle': 'confirm',
+                'data-toggle': 'modal',
+                'data-target': '#confirm-modal',
+                'data-remote': 'true'
             }
         }
     ]
