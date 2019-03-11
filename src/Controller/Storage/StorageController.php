@@ -56,10 +56,6 @@ class StorageController extends AbstractController
             $viewFile = "storage/storage/_index.html.twig";
         }
 
-        if ($space = $this->getSpaceInfo()) {
-            $request->getSession()->set('space', $space);
-        }
-
         return $this->render($viewFile, [
             'node' => $node,
             'rows' => new Paginator($repository->search($node, $request), $page),
@@ -180,26 +176,5 @@ class StorageController extends AbstractController
     public function new(): Http\Response
     {
         return new Http\Response();
-    }
-
-    /**
-     * @return array
-     */
-    protected function getSpaceInfo(): array
-    {
-        $data = [];
-        $arrContextOptions = stream_context_create([
-            "ssl" => [
-                "verify_peer" => false,
-                "verify_peer_name" => false
-            ],
-        ]);
-
-        if ($stream = fopen(getenv('UPLOADER_URL') . '/space', 'r', false, $arrContextOptions)) {
-            $data = json_decode(stream_get_contents($stream), true);
-            fclose($stream);
-        }
-
-        return $data;
     }
 }
