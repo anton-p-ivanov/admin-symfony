@@ -19,21 +19,28 @@ require('../../css/components/modal.scss');
     //
     // Variables
     //
+    let modal, supports, settings, defaults, initialized;
 
     // Object for public APIs
-    let modal = {
+    modal = {
         target: null,
         visible: false
     };
 
-    let supports = !!document.querySelector && !!document.addEventListener; // Feature test
-    let settings; // Placeholder variables
+    // Feature test
+    supports = !!document.querySelector && !!document.addEventListener;
+
+    // Placeholder variables
+    settings = {};
 
     // Default settings
-    let defaults = {
+    defaults = {
         selector: '[data-toggle="modal"]',
         close: '[data-dismiss="modal"]'
     };
+
+    // Is plugin initialized
+    initialized = false;
 
     /**
      * Handle events
@@ -49,7 +56,7 @@ require('../../css/components/modal.scss');
                 event.preventDefault();
                 event.stopImmediatePropagation();
 
-                modal.target = document.querySelector('.modal');
+                modal.target = document.querySelector(container.dataset.target);
                 if (modal.target) {
                     if (container.dataset.remote) {
                         fetch(container.href, {'headers': {'X-Requested-With': 'XMLHttpRequest'}})
@@ -158,16 +165,6 @@ require('../../css/components/modal.scss');
         }
     };
 
-    /**
-     * Handle keyboard events
-     * @private
-     */
-    // let keyboardHandler = function (event) {
-    //     if (event.key === "Escape" && modal.target) {
-    //         modal.toggle();
-    //     }
-    // };
-
     let events = {
         'click': closeHandler,
         'submit': submitHandler
@@ -210,7 +207,7 @@ require('../../css/components/modal.scss');
     modal.destroy = function () {
 
         // If plugin isn't already initialized, stop
-        if ( !settings ) return;
+        if ( !initialized ) return;
 
         // Remove event listeners
         document.removeEventListener('click', eventHandler, false);
@@ -222,7 +219,8 @@ require('../../css/components/modal.scss');
         }
 
         // Reset variables
-        settings = null;
+        settings = {};
+        initialized = false;
 
         modal.target = null;
         modal.visible = false;
@@ -246,6 +244,8 @@ require('../../css/components/modal.scss');
 
         // Listen for click events
         document.addEventListener('click', eventHandler, false);
+
+        initialized = true;
     };
 
     modal.show = function ( selector ) {
