@@ -1,0 +1,52 @@
+{% use "form_div_layout.html.twig" %}
+
+{% set items = [
+    [
+        {
+            "title": "context.menu.open",
+            "url": path('storage:index', {'uuid': row.uuid}),
+            "isVisible": row.storage.isDirectory,
+        }
+    ],
+    [
+        {
+            "title": 'context.menu.edit',
+            "url": path('storage:edit', {'uuid': row.storage.uuid}),
+        },
+        {
+            "title": 'context.menu.privileges',
+            "url": path('storage:access', {'uuid': row.storage.uuid}),
+        },
+    ],
+    [
+        {
+            "title": 'context.menu.download',
+            "url": path('storage:download', {'uuid': row.storage.uuid}),
+            "isVisible": not row.storage.isDirectory,
+        }
+    ],
+    [
+        {
+            "title": 'context.menu.delete',
+            "url": path('storage:delete', {'uuid': row.uuid}),
+            "attr": {
+                'data-toggle': 'confirm',
+            }
+        }
+    ]
+] %}
+
+{% for group in items %}
+    {% set counter = 0 %}
+    {% for item in group %}
+        {% if item.isVisible is not defined or item.isVisible %}
+            {% set counter = counter + 1 %}
+            <li class="dropdown__item">
+                <a href="{{ item.url }}" class="dropdown__link"{% if item.attr is defined %}{% with {attr: item.attr} %}{{ block('attributes') }}{% endwith %}{% endif %}>{{ item.title | trans({}, 'storage') }}</a>
+            </li>
+        {% endif %}
+    {% endfor %}
+    {% if not loop.last and counter > 0 %}
+        <li class="dropdown__item dropdown__item--divider"></li>
+    {% endif %}
+{% endfor %}
