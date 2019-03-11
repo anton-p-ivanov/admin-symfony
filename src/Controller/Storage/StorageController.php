@@ -62,6 +62,7 @@ class StorageController extends AbstractController
             'node' => $node,
             'rows' => new Paginator($repository->search($node, $request), $page),
             'path' => $repository->getPath($node),
+            'uploaderUrl' => getenv('UPLOADER_URL')
         ]);
     }
 

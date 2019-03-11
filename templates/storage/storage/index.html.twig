@@ -11,9 +11,9 @@
 
     {# Hidden input for file upload #}
     <input type="file" name="files[]" multiple="multiple"
-           data-upload="{{ path('uploader:upload') }}"
-           data-create="{{ path('storage:upload', {'uuid': node.uuid}) }}"
-           data-move="{{ path('uploader:move') }}"/>
+           data-upload="{{ uploaderUrl }}/upload"
+           data-move="{{ uploaderUrl }}/move"
+           data-create="{{ path('storage:upload', {'uuid': node.uuid}) }}" />
 
     {# Modal displays upload progress #}
     <div class="modal" id="upload-modal">
