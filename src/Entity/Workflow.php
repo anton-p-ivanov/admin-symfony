@@ -131,6 +131,14 @@ class Workflow
     }
 
     /**
+     * @param bool $isDeleted
+     */
+    public function setIsDeleted(bool $isDeleted): void
+    {
+        $this->isDeleted = $isDeleted;
+    }
+
+    /**
      * @return \DateTime
      */
     public function getUpdatedAt(): \DateTime

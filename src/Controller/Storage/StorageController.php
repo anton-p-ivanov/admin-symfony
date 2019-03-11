@@ -3,7 +3,9 @@
 namespace App\Controller\Storage;
 
 use App\Entity\Storage as Storage;
+use App\Form\ConfirmType;
 use App\Form\Storage\StorageType;
+use App\Service\DeleteService;
 use App\Tools\Paginator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation as Http;
@@ -116,13 +118,42 @@ class StorageController extends AbstractController
     }
 
     /**
-     * @Route("/{uuid}/delete", name="storage:delete", methods="DELETE")
+     * @Route("/{uuid}/delete", name="storage:delete", methods={"GET","DELETE"})
+     *
+     * @param Http\Request $request
+     * @param Storage\Tree $node
+     * @param DeleteService $service
      *
      * @return Http\Response
      */
-    public function delete(): Http\Response
+    public function delete(Http\Request $request, Storage\Tree $node, DeleteService $service): Http\Response
     {
-        return new Http\Response();
+        if (!$request->isXmlHttpRequest()) {
+            throw new HttpException(400, 'This @Route can be accessed via AJAX-Request only.');
+        }
+
+        $form = $this->createForm(ConfirmType::class, null, [
+            'action' => $this->generateUrl('storage:delete', ['uuid' => $node->getUuid()]),
+            'method' => 'DELETE',
+            'attr' => [
+                'data-url' => $this->generateUrl('storage:index', ['uuid' => $node->getParent()->getUuid()])
+            ]
+        ]);
+
+        $form->handleRequest($request);
+        $response = new Http\Response();
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid() && $service->delete($node->getStorage())) {
+                return $response;
+            }
+
+            $response->setStatusCode(Http\Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        return $this->render('confirm.html.twig', [
+            'form' => $form->createView()
+        ], $response);
     }
 
     /**
