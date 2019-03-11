@@ -3,7 +3,7 @@ security:
     providers:
         users:
             entity:
-                class: \App\Entity\User\User
+                class: App\Entity\User\User
                 property: email
 
     encoders:
