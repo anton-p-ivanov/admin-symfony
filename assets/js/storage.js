@@ -8,6 +8,7 @@ require('../css/storage.scss');
     if (widget) {
         let options = {
             'method': 'GET',
+            'mode': 'cors',
             'headers': {
                 'X-Requested-With': 'XMLHttpRequest',
                 'Accept': 'application/json',

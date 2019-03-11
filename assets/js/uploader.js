@@ -83,6 +83,7 @@ import uploader from "./components/uploader";
     let moveUploadedFile = function (url, data, callback) {
 
         let options = {
+            'mode': 'cors',
             'body': JSON.stringify({
                 'name': data.name,
                 'uuid': data.uuid,
@@ -228,6 +229,7 @@ import uploader from "./components/uploader";
 
         if (request.status === RESPONSE_OK) {
             createFileEntity(event.target.dataset.create, response, (json) => {
+                json.name = response.name;
                 createFileEntityCallback(json, progress, event.target.dataset.move)
             });
         }
