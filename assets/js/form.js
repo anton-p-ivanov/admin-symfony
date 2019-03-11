@@ -3,7 +3,7 @@ require('../css/form.scss');
 import tabs from "./components/tabs";
 import selector from "./components/selector";
 import modal from "./components/modal";
-import pjax from "./components/pjax";
+import update from "./components/update";
 
 (function () {
     'use strict';
@@ -11,6 +11,6 @@ import pjax from "./components/pjax";
     tabs.init();
     selector.init();
     modal.init();
-    pjax.init();
+    update.init();
 
 })();

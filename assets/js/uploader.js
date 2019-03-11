@@ -1,6 +1,6 @@
 
 import modal from "./components/modal";
-import pjax from "./components/pjax";
+import update from "./components/update";
 import uploader from "./components/uploader";
 
 (function () {
@@ -159,7 +159,7 @@ import uploader from "./components/uploader";
             m.querySelector('[data-total]').innerHTML = counter.toString();
 
             if (counter === 0) {
-                pjax.load('p-spreadsheet', location.href, false);
+                update.load('spreadsheet', location.href, false);
             }
 
         });

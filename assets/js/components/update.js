@@ -8,7 +8,7 @@
         module.exports = factory();
     }
     else {
-        root.pjax = factory();
+        root.update = factory();
     }
 })(this, function () {
 
@@ -18,10 +18,10 @@
     // Variables
     //
 
-    let pjax, supports, settings, defaults;
+    let update, supports, settings, defaults;
 
     // Object for public APIs
-    pjax = {};
+    update = {};
 
     // Feature test
     supports = !!(window.history && history.pushState);
@@ -31,7 +31,7 @@
 
     // Default settings
     defaults = {
-        selector: '[data-ajax="true"]',
+        selector: '[data-update]',
         options: {
             'headers': {'X-Requested-With': 'XMLHttpRequest'}
         }
@@ -40,7 +40,7 @@
     /**
      * Methods
      */
-    pjax.load = function (id, url, push) {
+    update.load = function (id, url, push) {
         let container = document.getElementById(id);
 
         if (!container) {
@@ -66,13 +66,12 @@
         let target = event.target;
 
         while (target !== document) {
-            let container = target.dataset.toggle === 'ajax'
-                ? document.querySelector(target.dataset.container)
-                : target.closest(settings.selector);
 
-            if (target.matches('a') && container) {
-                // Skip links with [data-ajax="false"]
-                if (target.dataset.ajax === "false") {
+            if (target.matches(settings.selector) || target.closest(settings.selector)) {
+                let selector = target.dataset.update || target.closest(settings.selector).dataset.update,
+                    container = document.querySelector(selector);
+
+                if (!container) {
                     return;
                 }
 
@@ -88,7 +87,7 @@
                 }
 
                 // Fetching page content
-                pjax.load(container.id, target.href, enableHistory);
+                update.load(container.id, target.href, enableHistory);
 
                 return;
             }
@@ -107,16 +106,15 @@
         let state = event.state;
 
         if (state && state.container) {
-            pjax.load(state.container, location.href, false);
+            update.load(state.container, location.href, false);
         }
-
     };
 
     /**
      * Destroy the current initialization.
      * @public
      */
-    pjax.destroy = function () {
+    update.destroy = function () {
 
         // If plugin isn't already initialized, stop
         if ( !settings ) return;
@@ -135,13 +133,13 @@
      * @public
      * @param {Object} options User settings
      */
-    pjax.init = function ( options ) {
+    update.init = function (options ) {
 
         // feature test
         if ( !supports ) return;
 
         // Destroy any existing initializations
-        pjax.destroy();
+        update.destroy();
 
         // Merging user options with defaults
         settings = {...defaults, ...options};
@@ -157,6 +155,6 @@
     // Public APIs
     //
 
-    return pjax;
+    return update;
 
 });

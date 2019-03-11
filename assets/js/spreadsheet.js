@@ -1,13 +1,13 @@
 require('../css/spreadsheet.scss');
 
-import pjax from "./components/pjax";
+import update from "./components/update";
 import modal from "./components/modal";
 import spreadsheet from "./components/spreadsheet";
 
 (function () {
     'use strict';
 
-    pjax.init();
+    update.init();
     modal.init();
     spreadsheet.init();
 

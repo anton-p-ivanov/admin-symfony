@@ -2,24 +2,24 @@
 
 {% block content %}
 
-    <div class="spreadsheet" data-ajax="true" id="p-spreadsheet">
+    <div class="spreadsheet" id="spreadsheet">
         {% block spreadsheet %}
         <div class="spreadsheet__toolbar">
             {% block spreadsheet_toolbar %}{% endblock %}
         </div>
-        <div class="spreadsheet__path">
+        <div class="spreadsheet__path" data-update="#spreadsheet">
             {% block spreadsheet_path %}{% endblock %}
         </div>
         <div class="spreadsheet__table">
             {% block spreadsheet_table %}{% endblock %}
         </div>
-        <div class="spreadsheet__pagination">
+        <div class="spreadsheet__pagination" data-update="#spreadsheet">
             {% block spreadsheet_pagination %}{% endblock %}
         </div>
         {% endblock %}
     </div>
 
-    {% block content_footer %}{% endblock %}
+{% endblock %}
 
 {% endblock %}
 
