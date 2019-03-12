@@ -83,7 +83,14 @@ class StorageController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $manager = $this->getDoctrine()->getManager();
-            $manager->getRepository(Storage\Tree::class)->setTreeNode($storage);
+            $manager->persist($storage);
+
+            $repository = $manager->getRepository(Storage\Tree::class);
+            if ($repository->isNodeChanged($storage)) {
+                $repository->persistAsFirstChildOf($storage->getNode(), $storage->getParent());
+            }
+
+            $manager->flush();
 
             if ($form->get('apply')->isClicked()) {
                 return $this->redirectToRoute('storage:edit', ['uuid' => $storage->getUuid()]);
@@ -185,16 +192,14 @@ class StorageController extends AbstractController
         $storage = new Storage\Storage([
             'title' => $response['name'],
             'type' => Storage\Storage::STORAGE_TYPE_FILE,
-            '+version' => $file
-        ]);
-
-        $node = new Storage\Tree([
-            'parent' => $root,
-            'storage' => $storage
+            '+version' => $file,
+            'node' => new Storage\Tree([
+                'parent' => $root,
+            ])
         ]);
 
         $manager = $this->getDoctrine()->getManager();
-        $manager->persist($node);
+        $manager->persist($storage);
         $manager->flush();
 
         return Http\JsonResponse::create(['uuid' => $file->getUuid(), 'name' => $response['name']]);

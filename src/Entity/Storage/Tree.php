@@ -28,7 +28,7 @@ class Tree
     /**
      * @var Storage
      * 
-     * @ORM\OneToOne(targetEntity="App\Entity\Storage\Storage", inversedBy="node", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Storage\Storage", inversedBy="node")
      * @ORM\JoinColumn(name="storage_uuid", referencedColumnName="uuid")
      */
     private $storage;

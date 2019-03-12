@@ -49,17 +49,16 @@ class StorageFixtures extends Fixture implements DependentFixtureInterface
                 'content' => $this->faker->text(500),
                 'workflow' => new Workflow(),
                 'type' => $index > 4 ? Storage::STORAGE_TYPE_FILE : Storage::STORAGE_TYPE_DIR,
+                'node' => new Tree([
+                    'parent' => $root
+                ])
             ];
 
             foreach ($attributes as $attribute => $value) {
                 $storage->{'set' . ucfirst($attribute)}($value);
             }
 
-            $node = new Tree();
-            $node->setParent($root);
-            $node->setStorage($storage);
-
-            $manager->persist($node);
+            $manager->persist($storage);
         }
 
         $manager->flush();

@@ -83,65 +83,11 @@ class TreeRepository extends NestedTreeRepository
 
     /**
      * @param Storage $element
-     */
-    public function setTreeNode(Storage $element): void
-    {
-        $isNewElement = $element->getUuid() === null;
-        $this->getEntityManager()->persist($element);
-
-        if (!$isNewElement) {
-            if ($this->isNodeChanged($element)) {
-                $this->updateNodes($element);
-            }
-        }
-        else {
-            $this->insertNodes($element);
-        }
-
-        $this->getEntityManager()->flush();
-    }
-
-    /**
-     * @param Storage $element
      *
      * @return bool
      */
-    private function isNodeChanged(Storage $element): bool
+    public function isNodeChanged(Storage $element): bool
     {
         return $this->findOneBy(['storage' => $element]) !== $element->getParent();
-    }
-
-    /**
-     * @param Storage $element
-     */
-    private function insertNodes(Storage $element): void
-    {
-        $node = new Tree();
-        $node->setStorage($element);
-        $node->setParent($element->getNode()->getParent());
-
-        $this->getEntityManager()->persist($node);
-    }
-
-    /**
-     * @param Storage $element
-     */
-    private function updateNodes(Storage $element): void
-    {
-//        if ($element->isDirectory()) {
-            if ($parent = $element->getParent()) {
-                $this->persistAsFirstChildOf($element->getNode(), $parent);
-            }
-//        }
-//        else {
-//            $previousNodes = $this->findBy(['storage' => $element]);
-//            if ($previousNodes) {
-//                foreach ($previousNodes as $node) {
-//                    $this->removeFromTree($node);
-//                }
-//            }
-//
-//            $this->insertNodes($element);
-//        }
     }
 }

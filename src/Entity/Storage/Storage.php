@@ -59,7 +59,7 @@ class Storage
     /**
      * @var Tree|null
      * 
-     * @ORM\OneToOne(targetEntity="App\Entity\Storage\Tree", mappedBy="storage")
+     * @ORM\OneToOne(targetEntity="App\Entity\Storage\Tree", mappedBy="storage", cascade={"persist"})
      */
     private $node;
 
@@ -212,6 +212,16 @@ class Storage
     public function getNode(): ?Tree
     {
         return $this->node;
+    }
+
+    /**
+     * @param Tree $node
+     */
+    public function setNode(Tree $node): void
+    {
+        $node->setStorage($this);
+
+        $this->node = $node;
     }
 
     /**
