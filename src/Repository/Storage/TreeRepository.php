@@ -75,7 +75,7 @@ class TreeRepository extends NestedTreeRepository
         $builder = $this->createQueryBuilder('t')
             ->select(['t', 's'])
             ->leftJoin('t.storage', 's')
-            ->andWhere('s.uuid IS NULL OR s.type = :type')
+            ->andWhere('s.type IS NULL OR s.type = :type')
             ->addOrderBy('t.root', 'ASC')
             ->addOrderBy('t.leftMargin', 'ASC')
             ->setParameters([
@@ -84,10 +84,11 @@ class TreeRepository extends NestedTreeRepository
 
         if ($except) {
             $builder
-                ->andWhere('t.uuid != :except')
-                ->setParameter('except', $except->getUuid());
+                ->andWhere('t.uuid != :uuid AND (t.parent IS NULL OR t.parent != :except)')
+                ->setParameter('uuid', $except->getUuid())
+                ->setParameter('except', $except);
         }
-        
+
         return $builder;
     }
 
