@@ -206,12 +206,41 @@ class StorageController extends AbstractController
     }
 
     /**
-     * @Route("/{uuid}/new", name="storage:new", methods="POST")
+     * @Route("/{uuid}/new", name="storage:new", methods={"GET","POST"})
+     *
+     * @param Http\Request $request
+     * @param Storage\Tree $parent
      *
      * @return Http\Response
      */
-    public function new(): Http\Response
+    public function new(Http\Request $request, Storage\Tree $parent): Http\Response
     {
-        return new Http\Response();
+        $storage = new Storage\Storage([
+            'title' => 'New folder',
+            'node' => new Storage\Tree([
+                'parent' => $parent
+            ])
+        ]);
+
+        /* @var $form \Symfony\Component\Form\Form */
+        $form = $this->createForm(StorageType::class, $storage);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($storage);
+            $manager->flush();
+
+            if ($form->get('apply')->isClicked()) {
+                return $this->redirectToRoute('storage:edit', ['uuid' => $storage->getUuid()]);
+            }
+
+            return $this->redirectToRoute('storage:index', ['uuid' => $storage->getParent()->getUuid()]);
+        }
+
+        return $this->render('storage/storage/new.html.twig', [
+            'storage' => $storage,
+            'form' => $form->createView(),
+        ]);
     }
 }
