@@ -18,7 +18,7 @@
     // Variables
     //
 
-    let update, supports, settings, defaults;
+    let update, supports, settings, defaults, events;
 
     // Object for public APIs
     update = {};
@@ -37,6 +37,9 @@
         }
     };
 
+    // Events
+    events = {'onBeforeLoad': null, 'onAfterLoad': null};
+
     /**
      * Methods
      */
@@ -47,12 +50,31 @@
             return false;
         }
 
+        // Init custom events
+        for (let event in events) {
+            // Create event instance
+            events[event] = new CustomEvent(event);
+
+            // Listen for event
+            container.addEventListener(event, this[event], false);
+        }
+
+        container.dispatchEvent(events.onBeforeLoad);
+
         fetch(url, settings.options)
             .then((response) => { return response.text() })
             .then((html) => {
                 container.innerHTML = html;
                 if (push) {
                     history.pushState({'container': id}, null, url);
+                }
+            })
+            .finally(() => {
+                container.dispatchEvent(events.onAfterLoad);
+
+                // Remove custom events
+                for (let event in events) {
+                    container.addEventListener(event, this[event], false);
                 }
             });
     };
@@ -66,8 +88,7 @@
         let target = event.target;
 
         while (target !== document) {
-
-            if (target.matches(settings.selector) || target.closest(settings.selector)) {
+            if (target.tagName === 'A' && (target.matches(settings.selector) || target.closest(settings.selector))) {
                 let selector = target.dataset.update || target.closest(settings.selector).dataset.update,
                     container = document.querySelector(selector);
 
@@ -109,6 +130,18 @@
             update.load(state.container, location.href, false);
         }
     };
+
+    /**
+     * Before fetching content event handler
+     * @param event
+     */
+    update.onBeforeLoad = function (event) { };
+
+    /**
+     * After fetching content event handler
+     * @param event
+     */
+    update.onAfterLoad = function (event) { };
 
     /**
      * Destroy the current initialization.
