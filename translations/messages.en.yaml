@@ -52,3 +52,8 @@ form:
         login_link: Login with your credentials
 general:
     not_available: Not available
+flash:
+    create:
+        success: New element has been created successfully.
+    update:
+        success: Changes are made was updated successfully.

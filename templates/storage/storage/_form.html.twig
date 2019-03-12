@@ -4,6 +4,13 @@
     ['tabs.versions', 'versions', not storage.isDirectory, storage.uuid ? path('storage:versions:index', {'uuid': storage.uuid}) : null],
 ] %}
 {{ form_start(form) }}
+
+{% for message in app.session.flashBag.get('success') %}
+    <div class="alert alert--success">
+        {{ message | trans }}
+    </div>
+{% endfor %}
+
 <div class="tabs">
     <ul class="tabs__nav">
         {% for item in nav %}

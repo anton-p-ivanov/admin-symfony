@@ -93,6 +93,7 @@ class StorageController extends AbstractController
             $manager->flush();
 
             if ($form->get('apply')->isClicked()) {
+                $this->addFlash('success', 'flash.update.success');
                 return $this->redirectToRoute('storage:edit', ['uuid' => $storage->getUuid()]);
             }
 
@@ -232,6 +233,7 @@ class StorageController extends AbstractController
             $manager->flush();
 
             if ($form->get('apply')->isClicked()) {
+                $this->addFlash('success', 'flash.create.success');
                 return $this->redirectToRoute('storage:edit', ['uuid' => $storage->getUuid()]);
             }
 
