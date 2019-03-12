@@ -94,8 +94,8 @@ class StorageType extends AbstractType
                 'label' => 'form.storage.node.label',
                 'help' => 'form.storage.node.help',
                 'class' => Tree::class,
-                'query_builder' => function (TreeRepository $repository) {
-                    return $repository->getTree();
+                'query_builder' => function (TreeRepository $repository) use ($storage) {
+                    return $repository->getTree($storage->getNode());
                 },
                 'choice_label' => function (Tree $node) {
                     return $this->getNodeTitle($node);

@@ -66,11 +66,13 @@ class TreeRepository extends NestedTreeRepository
     }
 
     /**
+     * @param Tree|null $except
+     *
      * @return QueryBuilder
      */
-    public function getTree(): QueryBuilder
+    public function getTree(?Tree $except = null): QueryBuilder
     {
-        return $this->createQueryBuilder('t')
+        $builder = $this->createQueryBuilder('t')
             ->select(['t', 's'])
             ->leftJoin('t.storage', 's')
             ->andWhere('s.uuid IS NULL OR s.type = :type')
@@ -79,6 +81,14 @@ class TreeRepository extends NestedTreeRepository
             ->setParameters([
                 'type' => Storage::STORAGE_TYPE_DIR
             ]);
+
+        if ($except) {
+            $builder
+                ->andWhere('t.uuid != :except')
+                ->setParameter('except', $except->getUuid());
+        }
+        
+        return $builder;
     }
 
     /**
