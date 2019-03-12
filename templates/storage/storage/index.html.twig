@@ -9,12 +9,6 @@
 {% block modals %}
     {{ parent() }}
 
-    {# Hidden input for file upload #}
-    <input type="file" name="files[]" multiple="multiple"
-           data-upload="{{ uploaderUrl }}/upload"
-           data-move="{{ uploaderUrl }}/move"
-           data-create="{{ path('storage:upload', {'uuid': node.uuid}) }}" />
-
     {# Modal displays upload progress #}
     <div class="modal" id="upload-modal">
         <div class="modal__container">

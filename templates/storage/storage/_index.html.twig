@@ -126,6 +126,12 @@
         {% endfor %}
         </tbody>
     </table>
+
+    {# Hidden input for file upload #}
+    <input type="file" name="files[]" multiple="multiple"
+           data-upload="{{ uploaderUrl }}/upload"
+           data-move="{{ uploaderUrl }}/move"
+           data-create="{{ path('storage:upload', {'uuid': node.uuid}) }}" />
 {% endblock %}
 
 {% block spreadsheet_pagination %}
