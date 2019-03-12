@@ -57,7 +57,10 @@
                 let checkboxes = spreadsheet.target.querySelectorAll('tbody input[data-toggle]');
 
                 if (input.closest('thead')) {
-                    [].forEach.call(checkboxes, (el) => { el.checked = input.checked; })
+                    [].forEach.call(checkboxes, (el) => {
+                        el.checked = input.checked;
+                        el.closest('tr').classList.toggle('table__row--selected', input.checked);
+                    });
                 }
                 else if (input.closest('tbody')) {
                     spreadsheet.target.querySelector('thead input[data-toggle]').checked = (
