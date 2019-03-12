@@ -3,17 +3,6 @@
 .dropdown {
     position: relative;
 
-    &:hover {
-        & > .dropdown__toggle {
-            color: $color-black;
-            text-decoration: none;
-        }
-
-        & > .dropdown__menu {
-            display: block;
-        }
-    }
-
     &--navbar {
         & > .dropdown__toggle {
             padding-top: 1rem;
@@ -21,14 +10,6 @@
 
             & > svg {
                 fill: $color-gray-dark;
-            }
-        }
-
-        &:hover > .dropdown__toggle {
-            background-color: rgba($color-black, .1);
-
-            & > svg {
-                fill: $color-black;
             }
         }
     }
@@ -43,6 +24,10 @@
         display: flex;
         color: inherit;
         position: relative;
+        transition: background-color .2s ease-in-out;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
 
         &--icon {
             padding: 0;
@@ -50,9 +35,15 @@
 
         &:hover,
         &:focus,
-        &:active {
+        &:active,
+        &--active {
             color: $color-black;
+            outline: 0;
+            background-color: rgba($color-black, .1);
             text-decoration: none;
+            & > svg {
+                fill: $color-black;
+            }
         }
     }
 
@@ -70,6 +61,10 @@
         border: 2px solid $color-gray-medium;
         box-shadow: 0 4px 8px 0 rgba($color-black, .25);
         color: $color-black;
+
+        &--active {
+            display: block;
+        }
 
         &--right {
             left: auto;
@@ -104,6 +99,11 @@
     }
 
     &__link {
+        &--active {
+            color: $color-white;
+            background-color: $color-gray-medium;
+        }
+
         &:hover {
             text-decoration: none;
             color: $color-white;

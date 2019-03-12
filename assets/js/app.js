@@ -1,8 +1,12 @@
 require('../css/app.scss');
 
+import DropDown from "./components/dropdown";
+
 (function () {
 
     'use strict';
+
+    DropDown.init();
 
     /**
      * Handle events
