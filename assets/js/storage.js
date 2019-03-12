@@ -1,29 +1,41 @@
 require('../css/storage.scss');
 
+import update from "./components/update";
+
 (function () {
     'use strict';
 
-    let widget = document.querySelector('[data-widget="space"]');
+    update.init();
+    update.onAfterLoad = () => { updateWidget(); };
 
-    if (widget) {
-        let options = {
-            'method': 'GET',
-            'mode': 'cors',
-            'headers': {
-                'X-Requested-With': 'XMLHttpRequest',
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        };
+    /**
+     * Updates a widget.
+     */
+    let updateWidget = function () {
 
-        fetch(widget.dataset.url, options)
-            .then((response) => { return response.json(); })
-            .then((data) => {
-                widget.innerHTML = widget.innerHTML.replace(/{(\w+)}/g, (match, p1) => {
-                    return formatSize(data[p1], 2);
+        let widget = document.querySelector('[data-widget="space"]');
+
+        if (widget) {
+            let options = {
+                'method': 'GET',
+                'mode': 'cors',
+                'headers': {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            };
+
+            fetch(widget.dataset.url, options)
+                .then((response) => { return response.json(); })
+                .then((data) => {
+                    widget.innerHTML = widget.innerHTML.replace(/{(\w+)}/g, (match, p1) => {
+                        return formatSize(data[p1], 2);
+                    })
                 })
-            })
-    }
+        }
+
+    };
 
     /**
      * Convert integer values to file size format.
@@ -61,5 +73,9 @@ require('../css/storage.scss');
             default:
                 return value + ' PT';
         }
-    }
+    };
+
+    // Update a widget on page load.
+    updateWidget();
+
 })();
