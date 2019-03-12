@@ -1,5 +1,3 @@
-// require('../../css/components/spreadsheet.scss');
-
 (function (root, factory) {
     // noinspection JSUnresolvedVariable
     if ( typeof define === 'function' && define.amd ) {

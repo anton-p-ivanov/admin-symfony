@@ -38,12 +38,11 @@
 {% endblock %}
 
 {% block javascripts %}
-    {{ parent() }}
+    {{ encore_entry_script_tags('app') }}
     {{ encore_entry_script_tags('storage') }}
-    {{ encore_entry_script_tags('uploader') }}
 {% endblock %}
 
 {% block stylesheets %}
-    {{ parent() }}
+    {{ encore_entry_link_tags('app') }}
     {{ encore_entry_link_tags('storage') }}
 {% endblock %}

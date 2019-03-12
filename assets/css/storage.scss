@@ -1,4 +1,9 @@
-@import "spreadsheet";
+@import "components/breadcrumbs";
+@import "components/buttons";
+@import "components/forms";
+@import "components/pagination";
+@import "components/tables";
+@import "components/toolbar";
 @import "components/progress";
 
 input[type="file"] {
