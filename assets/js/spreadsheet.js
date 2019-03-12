@@ -11,4 +11,7 @@ import spreadsheet from "./components/spreadsheet";
     modal.init();
     spreadsheet.init();
 
+    update.onBeforeLoad = (event) => {
+        event.target.insertAdjacentHTML("beforeend", '<div class="spreadsheet__backstage"></div>');
+    };
 })();
