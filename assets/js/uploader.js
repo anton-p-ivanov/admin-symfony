@@ -228,9 +228,11 @@ import uploader from "./components/uploader";
         }
 
         if (request.status === RESPONSE_OK) {
-            createFileEntity(event.target.dataset.create, response, (json) => {
+            let target = document.querySelector('.spreadsheet__table input[type="file"]');
+
+            createFileEntity(target.dataset.create, response, (json) => {
                 json.name = response.name;
-                createFileEntityCallback(json, progress, event.target.dataset.move)
+                createFileEntityCallback(json, progress, target.dataset.move)
             });
         }
 
