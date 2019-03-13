@@ -1,4 +1,4 @@
-{% use "form_div_layout.html.twig" %}
+{% extends "context.html.twig" %}
 
 {% set items = [
     [
@@ -37,18 +37,3 @@
         }
     ]
 ] %}
-
-{% for group in items %}
-    {% set counter = 0 %}
-    {% for item in group %}
-        {% if item.isVisible is not defined or item.isVisible %}
-            {% set counter = counter + 1 %}
-            <li class="dropdown__item">
-                <a href="{{ item.url }}" class="dropdown__link"{% if item.attr is defined %}{% with {attr: item.attr} %}{{ block('attributes') }}{% endwith %}{% endif %}>{{ item.title | trans({}, 'storage') }}</a>
-            </li>
-        {% endif %}
-    {% endfor %}
-    {% if not loop.last and counter > 0 %}
-        <li class="dropdown__item dropdown__item--divider"></li>
-    {% endif %}
-{% endfor %}

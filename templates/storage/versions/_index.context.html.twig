@@ -1,0 +1,34 @@
+{% extends "context.html.twig" %}
+
+{% set items = [
+    [
+        {
+            'title': 'context.menu.activate',
+            'url': path('storage:versions:activate', {'uuid': version.uuid}),
+            'isVisible': not version.isActive
+        }
+    ],
+    [
+        {
+            'title': 'context.menu.edit',
+            'url': path('storage:versions:edit', {'uuid': version.uuid}),
+            'attr': {
+                'data-toggle': 'modal',
+                'data-target': '#version-modal',
+                'data-remote': true
+            }
+        },
+        {
+            'title': 'context.menu.download',
+            'url': path('storage:versions:download', {'uuid': version.uuid})
+        },
+    ],
+    [
+        {
+            'title': 'context.menu.delete',
+            'url': path('storage:versions:delete', {'uuid': version.uuid}),
+            'isVisible': not version.isActive
+        }
+    ]
+] %}
+

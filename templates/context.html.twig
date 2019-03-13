@@ -1,0 +1,23 @@
+{% use "form_div_layout.html.twig" %}
+
+{% set filtered = [] %}
+{% for group in items %}
+    {% set isVisible = true %}
+    {% for item in group %}
+        {% set isVisible = isVisible and (item.isVisible is not defined or item.isVisible) %}
+    {% endfor %}
+    {% if isVisible %}
+        {% set filtered = filtered | merge([group]) %}
+    {% endif %}
+{% endfor %}
+
+{% for group in filtered %}
+    {% for item in group %}
+        <li class="dropdown__item">
+            <a href="{{ item.url }}" class="dropdown__link"{% if item.attr is defined %}{% with {attr: item.attr} %}{{ block('attributes') }}{% endwith %}{% endif %}>{{ item.title | trans({}, 'storage') }}</a>
+        </li>
+    {% endfor %}
+    {% if not loop.last %}
+        <li class="dropdown__item dropdown__item--divider"></li>
+    {% endif %}
+{% endfor %}
