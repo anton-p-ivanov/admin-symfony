@@ -2,6 +2,7 @@
 
 namespace App\Controller\Storage;
 
+use App\Annotation\AjaxRequest;
 use App\Entity\Storage as Storage;
 use App\Form\ConfirmType;
 use App\Form\Storage\StorageType;
@@ -9,7 +10,6 @@ use App\Service\DeleteService;
 use App\Tools\Paginator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation as Http;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -128,6 +128,7 @@ class StorageController extends AbstractController
 
     /**
      * @Route("/{uuid}/delete", name="storage:delete", methods={"GET","DELETE"})
+     * @AjaxRequest()
      *
      * @param Http\Request $request
      * @param Storage\Tree $node
@@ -137,10 +138,6 @@ class StorageController extends AbstractController
      */
     public function delete(Http\Request $request, Storage\Tree $node, DeleteService $service): Http\Response
     {
-        if (!$request->isXmlHttpRequest()) {
-            throw new HttpException(400, 'This @Route can be accessed via AJAX-Request only.');
-        }
-
         $form = $this->createForm(ConfirmType::class, null, [
             'action' => $this->generateUrl('storage:delete', ['uuid' => $node->getUuid()]),
             'method' => 'DELETE',
@@ -167,6 +164,7 @@ class StorageController extends AbstractController
 
     /**
      * @Route("/{uuid}/upload", name="storage:upload", methods={"PUT"})
+     * @AjaxRequest()
      *
      * @param Http\Request $request
      * @param Storage\Tree $root
@@ -175,10 +173,6 @@ class StorageController extends AbstractController
      */
     public function upload(Http\Request $request, Storage\Tree $root): Http\JsonResponse
     {
-        if (!$request->isXmlHttpRequest()) {
-            throw new HttpException(400, 'This @Route can be accessed via AJAX-Request only.');
-        }
-
         $response = json_decode($request->getContent(), true);
 
         // Preparing File entity

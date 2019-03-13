@@ -33,3 +33,10 @@ services:
 
     password.encoder:
         class: App\Security\PasswordEncoder
+
+    ajax.request:
+        class: App\Listener\AjaxRequestListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController}
+        arguments:
+            - "@annotation_reader"
