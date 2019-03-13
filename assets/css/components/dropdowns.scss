@@ -14,15 +14,11 @@
         }
     }
 
-    &--table {
-        padding-top: .5rem;
-        padding-bottom: .5rem;
-    }
-
     &__toggle {
         padding: .5rem 1rem;
         display: flex;
         color: inherit;
+        cursor: pointer;
         position: relative;
         transition: background-color .2s ease-in-out;
         white-space: nowrap;
@@ -30,7 +26,7 @@
         text-overflow: ellipsis;
 
         &--icon {
-            padding: 0;
+            padding: .625rem 0;
         }
 
         &:hover,

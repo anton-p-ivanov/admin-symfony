@@ -29,3 +29,30 @@ input[type="file"] {
         font-size: $font-size-sm;
     }
 }
+
+.form__input--toolbar {
+    border-width: 2px;
+    width: 150px;
+}
+
+.checkbox__input--table {
+    display: block;
+}
+
+.modal__container--confirm {
+    min-width: auto;
+    width: 400px;
+}
+
+.spreadsheet {
+    position: relative;
+
+    &__backstage {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba($color-white, .5);
+    }
+}
