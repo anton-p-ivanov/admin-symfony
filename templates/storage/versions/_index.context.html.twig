@@ -5,7 +5,10 @@
         {
             'title': 'context.menu.activate',
             'url': path('storage:versions:activate', {'uuid': version.uuid}),
-            'isVisible': not version.isActive
+            'isVisible': not version.isActive,
+            'attr': {
+                'data-update': '#versions',
+            }
         }
     ],
     [
@@ -27,7 +30,12 @@
         {
             'title': 'context.menu.delete',
             'url': path('storage:versions:delete', {'uuid': version.uuid}),
-            'isVisible': not version.isActive
+            'isVisible': not version.isActive,
+            "attr": {
+                'data-toggle': 'modal',
+                'data-target': '#confirm-modal',
+                'data-remote': 'true'
+            }
         }
     ]
 ] %}

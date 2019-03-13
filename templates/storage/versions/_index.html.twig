@@ -1,142 +1,100 @@
-{% set uuid = app.request.get('uuid') %}
-{% set buttons = [
-    [
-        ['Upload new version', path('storage:versions:upload', {'uuid': uuid})],
-        ['svg-refresh', path('storage:versions:index', {'uuid': uuid}), true]
-    ],
-] %}
+{% extends "_spreadsheet.html.twig"  %}
+{% use "form_div_layout.html.twig" %}
 
-<table class="table">
-    <colgroup>
-        <col>
-        <col width="70">
-        <col width="150">
-        <col width="150" span="2">
-        <col width="40">
-    </colgroup>
-    <thead class="table__head">
-    <tr class="table__row">
-        {% set headers = [
-            { 'title': 'Name' },
-            { 'title': 'Active', 'attr': {'class': 'table__item table__item--head table__item--center'} },
-            { 'title': 'Size', 'attr': {'class': 'table__item table__item--head table__item--right'} },
-            { 'title': 'Owner' },
-            { 'title': 'Modified' }
-        ] %}
-        {% for header in headers %}
-            {% set header = {'title': null, 'attr': {'class': 'table__item table__item--head'}} | merge(header) %}
-            <th {% with { attr: header.attr } %}{{ block('attributes') }}{% endwith %}>
-                {{ header.title }}
+{% block spreadsheet_table %}
+    <table class="table">
+        <colgroup>
+            <col>
+            <col width="70">
+            <col width="150">
+            <col width="150" span="2">
+            <col width="40">
+        </colgroup>
+        <thead class="table__head">
+        <tr class="table__row">
+            {% set headers = [
+                { 'title': 'table.head.version.name' },
+                { 'title': 'table.head.version.active', 'attr': {'class': 'table__item table__item--head table__item--center'} },
+                { 'title': 'table.head.size', 'attr': {'class': 'table__item table__item--head table__item--right'} },
+                { 'title': 'table.head.owner' },
+                { 'title': 'table.head.modified' }
+            ] %}
+            {% for header in headers %}
+                {% set header = {'title': null, 'attr': {'class': 'table__item table__item--head'}} | merge(header) %}
+                <th {% with { attr: header.attr } %}{{ block('attributes') }}{% endwith %}>
+                    {{ header.title | trans({}, 'storage') }}
+                </th>
+            {% endfor %}
+            <th class="table__item table__item--head table__item--icon">
+                <svg width="24" height="24"><use xlink:href="#svg-menu"></use></svg>
             </th>
+        </tr>
+        </thead>
+        <tbody class="table__body table__body--panel">
+        {% for version in rows %}
+        <tr class="table__row">
+            <td class="table__item">
+                <a href="{{ path('storage:versions:edit', {'uuid': version.uuid}) }}" data-toggle="modal" data-target="#version-modal" data-remote="true">{{ version.file.name }}</a>
+            </td>
+            <td class="table__item table__item--center">
+                {% if version.isActive %}
+                    <svg width="24" height="24"><use xlink:href="#svg-check"></use></svg>
+                {% endif %}
+            </td>
+            <td class="table__item table__item--right">
+                {{ version.file.size | size }}
+            </td>
+            <td class="table__item">
+                {% if version.file.workflow is not null and version.file.workflow.updated is not null %}
+                    {{ version.file.workflow.updated.fullName }}
+                {% else %}
+                    <em>{{ 'general.not_available' | trans }}</em>
+                {% endif %}
+            </td>
+            <td class="table__item">
+                {% if version.file.workflow is not null %}
+                    {{ version.file.workflow.updatedAt | date }}
+                {% else %}
+                    <em>{{ 'general.not_available' | trans }}</em>
+                {% endif %}
+            </td>
+            <td class="table__item table__item--dropdown">
+                <div class="dropdown dropdown--table">
+                    <a class="dropdown__toggle dropdown__toggle--icon" data-toggle="dropdown">
+                        <svg width="24" height="24"><use xlink:href="#svg-menu"></use></svg>
+                    </a>
+                    <ul class="dropdown__menu dropdown__menu--right">
+                        {{ include('storage/versions/_index.context.html.twig') }}
+                    </ul>
+                </div>
+            </td>
+        </tr>
         {% endfor %}
-        <th class="table__item table__item--head table__item--icon">
-            <svg width="24" height="24"><use xlink:href="#svg-menu"></use></svg>
-        </th>
-    </tr>
-    </thead>
-    <tbody class="table__body table__body--panel">
-    {% for version in rows %}
-    <tr class="table__row">
-        <td class="table__item">
-            <a href="{{ path('storage:versions:edit', {'uuid': version.uuid}) }}" data-toggle="modal" data-remote="true">{{ version.file.name }}</a>
-        </td>
-        <td class="table__item table__item--center">
-            {% if version.isActive %}
-                <svg width="24" height="24"><use xlink:href="#svg-check"></use></svg>
-            {% endif %}
-        </td>
-        <td class="table__item table__item--right">
-            {{ version.file.size | size }}
-        </td>
-        <td class="table__item">
-            {% if version.file.workflow is not null and version.file.workflow.updated is not null %}
-                {{ version.file.workflow.updated.fullName }}
-            {% else %}
-                <em>Not available</em>
-            {% endif %}
-        </td>
-        <td class="table__item">
-            {% if version.file.workflow is not null %}
-                {{ version.file.workflow.updatedAt | date }}
-            {% else %}
-                <em>Not available</em>
-            {% endif %}
-        </td>
-        <td class="table__item table__item--dropdown">
-            <div class="dropdown dropdown--table">
-                <a class="dropdown__toggle dropdown__toggle--icon" data-toggle="dropdown">
-                    <svg width="24" height="24"><use xlink:href="#svg-menu"></use></svg>
-                </a>
-                <ul class="dropdown__menu dropdown__menu--right">
-                    {% set items = [
-                        [{
-                            'title': 'Activate',
-                            'url': path('storage:versions:activate', {'uuid': version.uuid}),
-                            'isVisible': not version.isActive
-                        }],
-                        [
-                            {
-                                'title': 'Edit',
-                                'url': path('storage:versions:edit', {'uuid': version.uuid}),
-                                'link_attr': {'data-toggle': 'modal', 'data-remote': true}
-                            },
-                            {
-                                'title': 'Download',
-                                'url': path('storage:versions:download', {'uuid': version.uuid})
-                            },
-                        ],
-                        [{
-                            'title': 'Delete',
-                            'url': path('storage:versions:delete', {'uuid': version.uuid}),
-                            'isVisible': not version.isActive
-                        }]
-                    ] %}
-                    {% for group in items %}
-                        {% for item in group %}
-                            {% set item = {'title': null, 'url': null, 'isVisible': true, 'link_attr': {}} | merge(item) %}
-                            {% if item.isVisible is same as(true) %}
-                                <li class="dropdown__item">
-                                    <a href="{{ item.url }}" class="dropdown__link"{% with { attr: item.link_attr } %}{{ block('attributes') }}{% endwith %}>{{ item.title }}</a>
-                                </li>
-                            {% else %}
-                                <li class="dropdown__item dropdown__item--disabled">
-                                    <span class="dropdown__span">{{ item.title }}</span>
-                                </li>
-                            {% endif %}
-                        {% endfor %}
-                        {% if not loop.last %}
-                            <li class="dropdown__item dropdown__item--divider"></li>
-                        {% endif %}
-                    {% endfor %}
-                </ul>
-            </div>
-        </td>
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
-
-{{ include('pagination.html.twig', {
-    'paginator': rows,
-    'path': 'storage:versions:index',
-    'params': {'uuid': app.request.get('uuid')}
-}) }}
-
-{% block attributes %}
-    {% if attr is defined %}
-        {%- for name, value in attr -%}
-            {{- " " -}}
-            {%- if name in ['placeholder', 'title'] -%}
-                {{- name }}="{{ translation_domain is same as(false) ? value : value|trans({}, translation_domain) }}"
-            {%- elseif value is same as(true) -%}
-                {{- name }}="{{ name }}"
-            {%- elseif value is not same as(false) -%}
-                {{- name }}="{{ value }}"
-            {%- endif -%}
-        {%- endfor -%}
-    {% endif %}
-{% endblock attributes %}
-
-{% block stylesheets %}
-    {{ encore_entry_link_tags('grid') }}
+        </tbody>
+    </table>
 {% endblock %}
+
+{% block spreadsheet_pagination %}
+    {{ include('pagination.html.twig', {
+        'paginator': rows,
+        'path': 'storage:versions:index',
+        'params': {'uuid': storage.uuid}
+    }) }}
+{% endblock %}
+
+{% block toolbar_buttons %}
+    <div class="btn-group" role="group">
+        <div class="btn-group__item">
+            <a class="btn btn--default" href="{{ path('storage:versions:upload', {'uuid': storage.uuid}) }}" data-toggle="uploader">
+                {{ 'toolbar.btn.upload_version' | trans({}, 'storage') }}
+            </a>
+        </div>
+        <div class="btn-group__item">
+            <a class="btn btn--default btn--icon" href="{{ path('storage:versions:index', {'uuid': storage.uuid}) }}" data-update="#versions">
+                <svg width="24" height="24"><use xlink:href="#svg-refresh"></use></svg>
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block toolbar_search %}{% endblock %}

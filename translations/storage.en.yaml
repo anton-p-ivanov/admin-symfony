@@ -36,6 +36,7 @@ type:
 toolbar:
     btn:
         upload: Upload
+        upload_version: Upload version
         new_folder: New folder
 table:
     head:
@@ -44,6 +45,9 @@ table:
         size: Size
         owner: Owner
         modified: Modified
+        version:
+            name: Name
+            active: Active
 context:
     menu:
         open: Open
@@ -51,3 +55,4 @@ context:
         privileges: Permissions
         download: Download
         delete: Delete
+        activate: Activate

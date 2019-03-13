@@ -142,7 +142,6 @@ require('../../css/components/modal.scss');
                                 .then((content) => {
                                     let container = document.querySelector(toggle.dataset.container);
                                     if (container) {
-                                        container.style.minHeight = container.offsetHeight + 'px';
                                         container.innerHTML = content;
                                     }
                                 });

@@ -162,7 +162,7 @@ import uploader from "./components/uploader";
             m.querySelector('[data-total]').innerHTML = counter.toString();
 
             if (counter === 0) {
-                update.load('spreadsheet', location.href, false);
+                update.load(json.container, json.url, false);
             }
 
         });
@@ -230,7 +230,7 @@ import uploader from "./components/uploader";
         }
 
         if (request.status === RESPONSE_OK) {
-            let target = document.querySelector('.spreadsheet__table input[type="file"]');
+            let target = document.querySelector('input[type="file"]');
 
             createFileEntity(target.dataset.create, response, (json) => {
                 json.name = response.name;

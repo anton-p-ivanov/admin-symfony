@@ -1,0 +1,25 @@
+<div class="modal" id="upload-modal">
+    <div class="modal__container">
+        <div class="modal__header">
+            <span>File(s) upload</span>
+            <svg width="24" height="24" data-dismiss="modal"><use xlink:href="#svg-close"></use></svg>
+        </div>
+        <div class="modal__body">
+            <template id="progress-bar-template">
+                <div class="progress" data-file="%name%.%lastModified%">
+                    <div class="progress__bar"></div>
+                    <div class="progress__text">
+                        <div class="file">
+                            <div class="file__name">%name%</div>
+                            <div class="file__status">%status%</div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+        <div class="modal__footer">
+            <div class="text--muted">Files to be uploaded: <span data-total="0">0</span></div>
+            <button type="button" class="btn btn--default" data-dismiss="modal">{{ 'form.button.close' | trans }}</button>
+        </div>
+    </div>
+</div>

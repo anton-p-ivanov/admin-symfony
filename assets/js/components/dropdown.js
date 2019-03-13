@@ -52,6 +52,8 @@ require('../../css/components/dropdowns.scss');
                 event.preventDefault();
                 event.stopImmediatePropagation();
 
+                closeVisible();
+
                 let sibling = container.nextElementSibling;
                 if (sibling && sibling.classList.contains('dropdown__menu')) {
                     container.classList.toggle('dropdown__toggle--active', true);
@@ -77,15 +79,23 @@ require('../../css/components/dropdowns.scss');
         let target = event.target;
 
         if (!target.closest('.dropdown__menu')) {
-            let visible = document.querySelectorAll('.dropdown__menu--active');
-
-            [].forEach.call(visible, (item) => {
-                item.classList.toggle('dropdown__menu--active', false);
-                item.previousElementSibling.classList.toggle('dropdown__toggle--active', false);
-            });
-
+            closeVisible();
             document.removeEventListener('click', closeHandler, false);
         }
+    };
+
+    /**
+     * Close visible dropdowns
+     */
+    let closeVisible = () => {
+
+        let visible = document.querySelectorAll('.dropdown__menu--active');
+
+        [].forEach.call(visible, (item) => {
+            item.classList.toggle('dropdown__menu--active', false);
+            item.previousElementSibling.classList.toggle('dropdown__toggle--active', false);
+        });
+
     };
 
     /**

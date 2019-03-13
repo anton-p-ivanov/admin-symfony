@@ -37,7 +37,7 @@ class VersionRepository extends ServiceEntityRepository
             ->leftJoin('f.workflow', 'w')
             ->where('t.storage = :storage')
             ->setParameters(['storage' => $storage])
-            ->addOrderBy('w.updatedAt', 'DESC')
+            ->addOrderBy('f.name', 'ASC')
             ->getQuery();
     }
 

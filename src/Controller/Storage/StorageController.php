@@ -7,6 +7,7 @@ use App\Entity\Storage as Storage;
 use App\Form\ConfirmType;
 use App\Form\Storage\StorageType;
 use App\Service\DeleteService;
+use App\Service\DownloadService;
 use App\Tools\Paginator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation as Http;
@@ -103,6 +104,7 @@ class StorageController extends AbstractController
         return $this->render('storage/storage/edit.html.twig', [
             'storage' => $storage,
             'form' => $form->createView(),
+            'uploaderUrl' => getenv('UPLOADER_URL'),
         ]);
     }
 
@@ -119,11 +121,14 @@ class StorageController extends AbstractController
     /**
      * @Route("/{uuid}/download", name="storage:download", methods="GET")
      *
+     * @param Storage\Storage $storage
+     * @param DownloadService $service
+     *
      * @return Http\Response
      */
-    public function download(): Http\Response
+    public function download(Storage\Storage $storage, DownloadService $service): Http\Response
     {
-        return new Http\Response();
+        return $service->download($storage->getFile());
     }
 
     /**
@@ -142,7 +147,8 @@ class StorageController extends AbstractController
             'action' => $this->generateUrl('storage:delete', ['uuid' => $node->getUuid()]),
             'method' => 'DELETE',
             'attr' => [
-                'data-url' => $this->generateUrl('storage:index', ['uuid' => $node->getParent()->getUuid()])
+                'data-url' => $this->generateUrl('storage:index', ['uuid' => $node->getParent()->getUuid()]),
+                'data-container' => '#speadsheet'
             ]
         ]);
 
@@ -197,7 +203,12 @@ class StorageController extends AbstractController
         $manager->persist($storage);
         $manager->flush();
 
-        return Http\JsonResponse::create(['uuid' => $file->getUuid(), 'name' => $response['name']]);
+        return Http\JsonResponse::create([
+            'uuid' => $file->getUuid(),
+            'name' => $response['name'],
+            'url' => $this->generateUrl('storage:index', ['uuid' => $root->getUuid()]),
+            'container' => 'spreadsheet'
+        ]);
     }
 
     /**

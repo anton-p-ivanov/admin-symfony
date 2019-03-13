@@ -24,7 +24,7 @@
     <div class="tabs__panels">
         {% for item in nav %}
             {% if item[2] is not defined or item[2] is same as (true) %}
-            <div class="tabs__panel{% if loop.first %} tabs__panel--active{% endif %}" id="{{ item[1] }}"{% if item[3] is defined %} data-ajax="true" data-history="false"{% endif %}>
+            <div class="tabs__panel{% if loop.first %} tabs__panel--active{% endif %}" id="{{ item[1] }}"{% if item[3] is defined %} data-history="false"{% endif %}>
                 {{ include('/storage/storage/_form_' ~ item[1] ~ '.html.twig') }}
             </div>
             {% endif %}

@@ -1,7 +1,7 @@
 {% extends "_spreadsheet.html.twig"  %}
 
 {% block spreadsheet_path %}
-    <div class="grid-path">
+    <div class="grid-path" data-update="#spreadsheet">
         <div class="grid-path__item grid-path__item--left">
             <ul class="breadcrumbs">
                 {% for node in path %}
@@ -135,11 +135,13 @@
 {% endblock %}
 
 {% block spreadsheet_pagination %}
+    <div data-update="#spreadsheet">
     {{ include('pagination.html.twig', {
         'paginator': rows,
         'path': 'storage:index',
         'params': {'uuid': app.request.get('uuid')}
     }) }}
+    </div>
 {% endblock %}
 
 {% block toolbar_buttons %}
