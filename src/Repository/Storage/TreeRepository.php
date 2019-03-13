@@ -82,10 +82,10 @@ class TreeRepository extends NestedTreeRepository
                 'type' => Storage::STORAGE_TYPE_DIR
             ]);
 
-        if ($except) {
+        if ($except && ($uuid = $except->getUuid())) {
             $builder
                 ->andWhere('t.uuid != :uuid AND (t.parent IS NULL OR t.parent != :except)')
-                ->setParameter('uuid', $except->getUuid())
+                ->setParameter('uuid', $uuid)
                 ->setParameter('except', $except);
         }
 

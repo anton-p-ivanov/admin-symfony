@@ -105,9 +105,9 @@ class Tree
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getUuid(): string
+    public function getUuid(): ?string
     {
         return $this->uuid;
     }
