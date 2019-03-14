@@ -1,0 +1,49 @@
+<div class="btn-group" role="group">
+    <div class="btn-group__item">
+        <a class="btn btn--default" href="{{ path('storage:upload', {'uuid': node.uuid}) }}" data-toggle="uploader">
+            {{ 'toolbar.btn.upload' | trans({}, 'storage') }}
+        </a>
+    </div>
+    <div class="btn-group__item">
+        <a class="btn btn--default" href="{{ path('storage:new', {'uuid': node.uuid}) }}">
+            {{ 'toolbar.btn.new_folder' | trans({}, 'storage') }}
+        </a>
+    </div>
+</div>
+<div class="btn-group" role="group">
+    <div class="btn-group__item">
+        <a class="btn btn--default btn--icon btn--disabled" href="{{ path('storage:access', {'uuid': node.uuid}) }}" data-disabled="true" data-watch="checked" data-toggle="access">
+            <svg width="24" height="24"><use xlink:href="#svg-lock"></use></svg>
+        </a>
+    </div>
+</div>
+<div class="btn-group" role="group">
+    <div class="btn-group__item">
+        <a class="btn btn--default btn--icon btn--disabled" href="{{ path('storage:delete', {'uuid': node.uuid}) }}" data-disabled="true" data-watch="checked" data-toggle="modal" data-target="#confirm-modal">
+            <svg width="24" height="24"><use xlink:href="#svg-delete"></use></svg>
+        </a>
+    </div>
+    <div class="btn-group__item">
+        <a class="btn btn--default btn--icon" href="{{ path('storage:index', {'uuid': node.uuid}) }}" data-update="#spreadsheet" data-history="false">
+            <svg width="24" height="24"><use xlink:href="#svg-refresh"></use></svg>
+        </a>
+    </div>
+</div>
+<div class="btn-group" role="group">
+    <div class="btn-group__item">
+        <div class="dropdown dropdown--navbar">
+            <a class="dropdown__toggle" href="#" data-toggle="dropdown">
+                <span>View</span>
+                <svg width="24" height="24"><use xlink:href="#svg-dropdown-toggle"></use></svg>
+            </a>
+            <ul class="dropdown__menu">
+                <li class="dropdown__item">
+                    <a href="#" class="dropdown__link dropdown__link--active">Actual items</a>
+                </li>
+                <li class="dropdown__item">
+                    <a href="#" class="dropdown__link">Removed items</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
