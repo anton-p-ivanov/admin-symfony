@@ -104,6 +104,18 @@ class StorageType extends AbstractType
                     new Assert\NotBlank()
                 ]
             ])
+            ->add('roles', EntityType::class, [
+                'required' => false,
+                'label' => false,
+                'class' => Role::class,
+                'choice_label' => 'title',
+                'choice_translation_domain' => false,
+                'choice_attr' => function(Role $choice) {
+                    return ['help' => $choice->getDescription()];
+                },
+                'multiple' => true,
+                'expanded' => true,
+            ])
             ->add('status', EntityType::class, [
                 'label' => 'form.storage.status.label',
                 'class' => WorkflowStatus::class,
@@ -130,22 +142,6 @@ class StorageType extends AbstractType
                 'translation_domain' => 'messages',
                 'attr' => ['class' => 'btn btn--default']
             ]);
-
-        if (!$storage->isDirectory()) {
-            $builder
-                ->add('roles', EntityType::class, [
-                    'required' => false,
-                    'label' => false,
-                    'class' => Role::class,
-                    'choice_label' => 'title',
-                    'choice_translation_domain' => false,
-                    'choice_attr' => function(Role $choice) {
-                        return ['help' => $choice->getDescription()];
-                    },
-                    'multiple' => true,
-                    'expanded' => true,
-                ]);
-        }
     }
 
     /**
