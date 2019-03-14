@@ -6,6 +6,9 @@
             "title": "context.menu.open",
             "url": path('storage:index', {'uuid': row.uuid}),
             "isVisible": row.storage.isDirectory,
+            "attr": {
+                "data-update": "#spreadsheet"
+            }
         }
     ],
     [
@@ -13,12 +16,6 @@
             "title": 'context.menu.edit',
             "url": path('storage:edit', {'uuid': row.storage.uuid}),
         },
-        {
-            "title": 'context.menu.privileges',
-            "url": path('storage:access', {'uuid': row.storage.uuid}),
-        },
-    ],
-    [
         {
             "title": 'context.menu.download',
             "url": path('storage:download', {'uuid': row.storage.uuid}),

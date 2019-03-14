@@ -2,12 +2,14 @@
 
 {% set filtered = [] %}
 {% for group in items %}
-    {% set isVisible = true %}
+    {% set filtered_group = [] %}
     {% for item in group %}
-        {% set isVisible = isVisible and (item.isVisible is not defined or item.isVisible) %}
+        {% if (item.isVisible is not defined or item.isVisible) %}
+            {% set filtered_group = filtered_group | merge([item]) %}
+        {% endif %}
     {% endfor %}
-    {% if isVisible %}
-        {% set filtered = filtered | merge([group]) %}
+    {% if filtered_group | length %}
+        {% set filtered = filtered | merge([filtered_group]) %}
     {% endif %}
 {% endfor %}
 
