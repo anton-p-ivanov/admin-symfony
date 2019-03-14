@@ -112,6 +112,7 @@ class StorageController extends AbstractController
 
     /**
      * @Route("/{uuid}/access", name="storage:access", methods={"GET","POST"})
+     * @AjaxRequest()
      *
      * @param Http\Request $request
      * @param Storage\Tree $tree
