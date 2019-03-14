@@ -322,8 +322,53 @@ import uploader from "./components/uploader";
         }
     };
 
+    /**
+     * Event handler callback
+     * @param {Event} event
+     */
+    let eventHandler = (event) => {
+
+        let target = event.target;
+
+        while (target !== document) {
+            if (target.matches('[data-toggle="access"]')) {
+                event.preventDefault();
+                event.stopImmediatePropagation();
+
+                let m = document.getElementById('access-modal'),
+                    s = document.getElementById('spreadsheet'),
+                    v = [];
+
+                if (m) {
+                    let options = {
+                        'headers': {'X-Requested-With': 'XMLHttpRequest'}
+                    };
+
+                    fetch(target.href, options)
+                        .then((response) => { return response.text(); })
+                        .then((html) => {
+                            [].forEach.call(s.querySelectorAll('.table tbody input:checked'), (item) => {
+                                v.push(item.value);
+                            });
+
+                            m.querySelector('.modal__container').innerHTML = html;
+                            m.querySelector('#access_items').value = JSON.stringify(v);
+
+                            modal.show(m);
+                        });
+                }
+            }
+
+            target = target.parentNode;
+        }
+
+    };
+
     // Update a widget on page load.
     updateWidget();
+
+    // Set event listeners
+    document.addEventListener('click', eventHandler, false);
 
     // Initialize components
     [update, modal, spreadsheet, uploader].forEach((component) => {

@@ -11,6 +11,11 @@
 
     {# Modal displays upload progress #}
     {{ include('storage/storage/_upload.html.twig') }}
+
+    {# Access modal #}
+    <div class="modal" id="access-modal">
+        <div class="modal__container"></div>
+    </div>
 {% endblock %}
 
 {% block javascripts %}

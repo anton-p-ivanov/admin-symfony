@@ -1,6 +1,6 @@
 {% set nav = [
     ['tabs.properties', 'properties'],
-    ['tabs.permissions', 'permissions', not storage.isDirectory],
+    ['tabs.permissions', 'access'],
     ['tabs.versions', 'versions', not storage.isDirectory, storage.uuid ? path('storage:versions:index', {'uuid': storage.uuid}) : null],
 ] %}
 {{ form_start(form) }}

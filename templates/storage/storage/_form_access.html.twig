@@ -8,10 +8,12 @@
         </button>
     </div>
     <div class="grid__column">
+    {% if not storage.isDirectory %}
         <h2>Access requests</h2>
         <hr />
         <p><em>No access requests found.</em></p>
         <p>This block contains a list of requests from users to access this file. As soon as one of the users
             sends an access request it will be displayed in this list.</p>
+    {% endif %}
     </div>
 </div>

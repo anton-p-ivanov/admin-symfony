@@ -5,7 +5,9 @@ namespace App\Controller\Storage;
 use App\Annotation\AjaxRequest;
 use App\Entity\Storage as Storage;
 use App\Form\ConfirmType;
+use App\Form\AccessType;
 use App\Form\Storage\StorageType;
+use App\Service\AccessService;
 use App\Service\DeleteService;
 use App\Service\DownloadService;
 use App\Tools\Paginator;
@@ -109,13 +111,41 @@ class StorageController extends AbstractController
     }
 
     /**
-     * @Route("/{uuid}/access", name="storage:access", methods="GET")
+     * @Route("/{uuid}/access", name="storage:access", methods={"GET","POST"})
+     *
+     * @param Http\Request $request
+     * @param Storage\Tree $tree
+     * @param AccessService $service
      *
      * @return Http\Response
      */
-    public function access(): Http\Response
+    public function access(Http\Request $request, Storage\Tree $tree, AccessService $service): Http\Response
     {
-        return new Http\Response();
+        /* @var $form \Symfony\Component\Form\Form */
+        $form = $this->createForm(AccessType::class, null, [
+            'action' => $this->generateUrl('storage:access', ['uuid' => $tree->getUuid()]),
+            'attr' => [
+                'data-container' => '#spreadsheet',
+                'data-url' => $this->generateUrl('storage:index', ['uuid' => $tree->getUuid()]),
+            ]
+        ]);
+
+        $form->handleRequest($request);
+
+        $response = new Http\Response();
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid() && $service->apply($form)) {
+                return $response;
+            }
+
+            $response->setStatusCode(Http\Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        return $this->render('access.html.twig', [
+            'tree' => $tree,
+            'form' => $form->createView(),
+        ], $response);
     }
 
     /**
