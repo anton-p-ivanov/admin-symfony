@@ -277,9 +277,9 @@ class Storage
     }
 
     /**
-     * @param ArrayCollection $categories
+     * @param Collection $categories
      */
-    public function setCategories(ArrayCollection $categories): void
+    public function setCategories(Collection $categories): void
     {
         $this->categories = $categories;
     }
@@ -309,9 +309,9 @@ class Storage
     }
 
     /**
-     * @param ArrayCollection $roles
+     * @param Collection $roles
      */
-    public function setRoles(ArrayCollection $roles): void
+    public function setRoles(Collection $roles): void
     {
         $this->roles = $roles;
     }

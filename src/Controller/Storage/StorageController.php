@@ -221,11 +221,11 @@ class StorageController extends AbstractController
      * @AjaxRequest()
      *
      * @param Http\Request $request
-     * @param Storage\Tree $root
+     * @param Storage\Tree $parent
      *
      * @return Http\JsonResponse
      */
-    public function upload(Http\Request $request, Storage\Tree $root): Http\JsonResponse
+    public function upload(Http\Request $request, Storage\Tree $parent): Http\JsonResponse
     {
         $response = json_decode($request->getContent(), true);
 
@@ -238,12 +238,15 @@ class StorageController extends AbstractController
         ]);
 
         // Preparing Storage entity
+        $donor = $parent->getStorage();
         $storage = new Storage\Storage([
             'title' => $response['name'],
             'type' => Storage\Storage::STORAGE_TYPE_FILE,
+            'categories' => $donor->getCategories(),
+            'roles' => $donor->getRoles(),
             '+version' => $file,
             'node' => new Storage\Tree([
-                'parent' => $root,
+                'parent' => $parent,
             ])
         ]);
 
@@ -254,7 +257,7 @@ class StorageController extends AbstractController
         return Http\JsonResponse::create([
             'uuid' => $file->getUuid(),
             'name' => $response['name'],
-            'url' => $this->generateUrl('storage:index', ['uuid' => $root->getUuid()]),
+            'url' => $this->generateUrl('storage:index', ['uuid' => $parent->getUuid()]),
             'container' => 'spreadsheet'
         ]);
     }
@@ -269,8 +272,11 @@ class StorageController extends AbstractController
      */
     public function new(Http\Request $request, Storage\Tree $parent): Http\Response
     {
+        $donor = $parent->getStorage();
         $storage = new Storage\Storage([
             'title' => 'New folder',
+            'roles' => $donor->getRoles(),
+            'categories' => $donor->getCategories(),
             'node' => new Storage\Tree([
                 'parent' => $parent
             ])
