@@ -6,7 +6,9 @@
 <div class="modal__body modal__body--form">
     {{ form_row(form.roles) }}
     {{ form_row(form.scope) }}
-    {{ form_row(form.items) }}
+    <div id="spreadsheet-items">
+        {{ form_row(form.items) }}
+    </div>
 </div>
 <div class="modal__footer">
     {{ form_widget(form.cancel) }}

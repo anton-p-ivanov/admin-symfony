@@ -12,6 +12,7 @@ use App\Service\DeleteService;
 use App\Service\DownloadService;
 use App\Tools\Paginator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation as Http;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
@@ -68,7 +69,6 @@ class StorageController extends AbstractController
             'uploaderUrl' => getenv('UPLOADER_URL')
         ]);
     }
-
 
     /**
      * @Route("/{uuid}/edit", name="storage:edit", methods={"GET","POST"})
@@ -175,11 +175,11 @@ class StorageController extends AbstractController
     public function delete(Http\Request $request, Storage\Tree $node, DeleteService $service): Http\Response
     {
         $form = $this->createForm(ConfirmType::class, null, [
-            'action' => $this->generateUrl('storage:delete', ['uuid' => $node->getUuid()]),
+            'action' => $this->generateUrl('storage:delete', ['uuid' => $node->getUuid(), 'batch' => $request->get('batch')]),
             'method' => 'DELETE',
             'attr' => [
-                'data-url' => $this->generateUrl('storage:index', ['uuid' => $node->getParent()->getUuid()]),
-                'data-container' => '#speadsheet'
+                'data-url' => $this->generateUrl('storage:index', ['uuid' => $request->get('batch') ? $node->getUuid() : $node->getParent()->getUuid()]),
+                'data-container' => '#spreadsheet'
             ]
         ]);
 
@@ -187,7 +187,24 @@ class StorageController extends AbstractController
         $response = new Http\Response();
 
         if ($form->isSubmitted()) {
-            if ($form->isValid() && $service->delete($node->getStorage())) {
+            $nodes = [$node->getStorage()];
+
+            if ($request->get('batch')) {
+                $items = json_decode($form->get('items')->getNormData(), true);
+
+                /* @var Storage\Tree[] $nodes */
+                $nodes = $this->getDoctrine()
+                    ->getRepository(Storage\Tree::class)
+                    ->findBy(['uuid' => $items]);
+
+                if (!$nodes) {
+                    $form->addError(new FormError('form.errors.invalid_items'));
+                }
+
+                $nodes = array_map(function (Storage\Tree $node) { return $node->getStorage(); }, $nodes);
+            }
+
+            if ($form->isValid() && $service->delete($nodes)) {
                 return $response;
             }
 

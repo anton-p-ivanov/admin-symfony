@@ -22,6 +22,7 @@ class ConfirmType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('items', Type\HiddenType::class)
             ->add('password', Type\PasswordType::class, [
                 'label' => 'form.confirm.password.label',
                 'constraints' => [

@@ -1,13 +1,12 @@
-{{ form_start(form, {
-    'attr': {
-        'novalidate': true
-    }
-}) }}
+{{ form_start(form, {'attr': {'novalidate': true}}) }}
     <div class="modal__header">
         <span>{{ 'form.confirm.title' | trans }}</span>
         <svg width="24" height="24" data-dismiss="modal"><use xlink:href="#svg-close"></use></svg>
     </div>
     <div class="modal__body modal__body--form">
+        <div id="spreadsheet-items">
+            {{ form_row(form.items) }}
+        </div>
         {{ form_row(form.password, {'attr': {'autofocus': true}}) }}
     </div>
     <div class="modal__footer">

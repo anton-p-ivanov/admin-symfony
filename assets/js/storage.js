@@ -331,11 +331,11 @@ import uploader from "./components/uploader";
         let target = event.target;
 
         while (target !== document) {
-            if (target.matches('[data-toggle="access"]')) {
+            if (target.matches('[data-watch="checked"]')) {
                 event.preventDefault();
                 event.stopImmediatePropagation();
 
-                let m = document.getElementById('access-modal'),
+                let m = document.querySelector(target.dataset.target),
                     s = document.getElementById('spreadsheet'),
                     v = [];
 
@@ -352,7 +352,7 @@ import uploader from "./components/uploader";
                             });
 
                             m.querySelector('.modal__container').innerHTML = html;
-                            m.querySelector('#access_items').value = JSON.stringify(v);
+                            m.querySelector('#spreadsheet-items input[type="hidden"]').value = JSON.stringify(v);
 
                             modal.show(m);
                         });

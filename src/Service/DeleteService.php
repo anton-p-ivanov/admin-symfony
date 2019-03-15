@@ -27,24 +27,26 @@ class DeleteService
     }
 
     /**
-     * @param mixed $entity
+     * @param array $entities
      *
      * @return bool
      */
-    public function delete($entity): bool
+    public function delete($entities): bool
     {
         $workflow = null;
 
-        if (method_exists($entity, 'getWorkflow')) {
-            $workflow = $entity->getWorkflow();
-        }
+        foreach ($entities as $entity) {
+            if (method_exists($entity, 'getWorkflow')) {
+                $workflow = $entity->getWorkflow();
+            }
 
-        if ($workflow instanceof Workflow) {
-            $workflow->setIsDeleted(true);
-            $this->entityManager->persist($workflow);
-        }
-        else {
-            $this->entityManager->remove($entity);
+            if ($workflow instanceof Workflow) {
+                $workflow->setIsDeleted(true);
+                $this->entityManager->persist($workflow);
+            }
+            else {
+                $this->entityManager->remove($entity);
+            }
         }
 
         $this->entityManager->flush();
