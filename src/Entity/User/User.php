@@ -6,14 +6,12 @@ use App\Entity\WorkflowTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\EquatableInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="App\Repository\User\UserRepository")
  */
-class User implements UserInterface, EquatableInterface, \Serializable
+class User
 {
     use WorkflowTrait;
 
@@ -69,35 +67,35 @@ class User implements UserInterface, EquatableInterface, \Serializable
     private $isConfirmed;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $phone;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $phone_mobile;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $skype;
 
     /**
-     * @var \DateTime
+     * @var \DateTime|null
      *
      * @ORM\Column(type="date", nullable=true)
      */
     private $birthdate;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(type="text", nullable=true, length=65536)
      */
@@ -153,25 +151,44 @@ class User implements UserInterface, EquatableInterface, \Serializable
 
     /**
      * User constructor.
+     * @param array $attributes
      */
-    public function __construct()
+    public function __construct(array $attributes = [])
     {
-        $attributes = [
+        $defaults = [
             'passwords' => new ArrayCollection(),
             'checkwords' => new ArrayCollection(),
+            'roles' => new ArrayCollection(),
+            'sites' => new ArrayCollection(),
             'isActive' => true,
-            'isConfirmed' => false
+            'isConfirmed' => false,
         ];
 
-        foreach ($attributes as $name => $value) {
-            $this->$name = $value;
+        $attributes = array_merge($defaults, $attributes);
+
+        foreach ($attributes as $attribute => $value) {
+            $method = strpos($attribute, '+') === 0
+                ? 'add' . ucfirst(substr($attribute, 1))
+                : 'set' . ucfirst($attribute);
+
+            if (method_exists($this, $method)) {
+                $this->$method($value);
+            }
         }
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getEmail(): string
+    public function getUuid(): ?string
+    {
+        return $this->uuid;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getEmail(): ?string
     {
         return $this->email;
     }
@@ -185,9 +202,9 @@ class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getFname(): string
+    public function getFname(): ?string
     {
         return $this->fname;
     }
@@ -201,9 +218,9 @@ class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getLname(): string
+    public function getLname(): ?string
     {
         return $this->lname;
     }
@@ -217,11 +234,131 @@ class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
+     * @return string|null
+     */
+    public function getSname(): ?string
+    {
+        return $this->sname;
+    }
+
+    /**
+     * @param string|null $sname
+     */
+    public function setSname(?string $sname): void
+    {
+        $this->sname = $sname;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    /**
+     * @param string|null $phone
+     */
+    public function setPhone(?string $phone): void
+    {
+        $this->phone = $phone;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPhoneMobile(): ?string
+    {
+        return $this->phone_mobile;
+    }
+
+    /**
+     * @param string|null $phone_mobile
+     */
+    public function setPhoneMobile(?string $phone_mobile): void
+    {
+        $this->phone_mobile = $phone_mobile;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSkype(): ?string
+    {
+        return $this->skype;
+    }
+
+    /**
+     * @param string|null $skype
+     */
+    public function setSkype(?string $skype): void
+    {
+        $this->skype = $skype;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getBirthdate(): ?\DateTime
+    {
+        return $this->birthdate;
+    }
+
+    /**
+     * @param \DateTime|null $birthdate
+     */
+    public function setBirthdate(?\DateTime $birthdate): void
+    {
+        $this->birthdate = $birthdate;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getComments(): ?string
+    {
+        return $this->comments;
+    }
+
+    /**
+     * @param string|null $comments
+     */
+    public function setComments(?string $comments): void
+    {
+        $this->comments = $comments;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getSites(): ArrayCollection
+    {
+        return $this->sites;
+    }
+
+    /**
+     * @param ArrayCollection $sites
+     */
+    public function setSites(ArrayCollection $sites): void
+    {
+        $this->sites = $sites;
+    }
+
+    /**
      * @return ArrayCollection
      */
     public function getPasswords(): Collection
     {
         return $this->passwords;
+    }
+
+    /**
+     * @param ArrayCollection $passwords
+     */
+    public function setPasswords(ArrayCollection $passwords): void
+    {
+        $this->passwords = $passwords;
     }
 
     /**
@@ -241,6 +378,14 @@ class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
+     * @param ArrayCollection $checkwords
+     */
+    public function setCheckwords(ArrayCollection $checkwords): void
+    {
+        $this->checkwords = $checkwords;
+    }
+
+    /**
      * @param Checkword $checkword
      */
     public function setCheckword(Checkword $checkword)
@@ -257,11 +402,11 @@ class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * @param array $roles
+     * @param ArrayCollection $roles
      */
-    public function setRoles(array $roles): void
+    public function setRoles(ArrayCollection $roles): void
     {
-        $this->roles = new ArrayCollection($roles);
+        $this->roles = $roles;
     }
 
     /**
@@ -270,6 +415,14 @@ class User implements UserInterface, EquatableInterface, \Serializable
     public function isActive(): bool
     {
         return $this->isActive;
+    }
+
+    /**
+     * @param bool $isActive
+     */
+    public function setIsActive(bool $isActive): void
+    {
+        $this->isActive = $isActive;
     }
 
     /**
@@ -286,99 +439,6 @@ class User implements UserInterface, EquatableInterface, \Serializable
     public function setIsConfirmed(bool $isConfirmed): void
     {
         $this->isConfirmed = $isConfirmed;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getPassword(): ?string
-    {
-        $password = $this->getPasswords()->first();
-        if ($password) {
-            $this->password = $password->getPassword();
-        }
-
-        return $this->password;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getSalt(): ?string
-    {
-        $password = $this->getPasswords()->first();
-        if ($password) {
-            $this->salt = $password->getSalt();
-        }
-
-        return $this->salt;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getUsername(): ?string
-    {
-        return $this->email;
-    }
-
-    /**
-     * @see \Serializable::serialize()
-     */
-    public function serialize()
-    {
-        return serialize([
-            $this->uuid,
-            $this->fname,
-            $this->lname,
-            $this->email,
-            $this->roles,
-        ]);
-    }
-
-    /**
-     * @param $serialized
-     *
-     * @see \Serializable::unserialize()
-     */
-    public function unserialize($serialized)
-    {
-        list (
-            $this->uuid,
-            $this->fname,
-            $this->lname,
-            $this->email,
-            $this->roles
-            ) = unserialize($serialized);
-    }
-
-    /**
-     * @param UserInterface $user
-     *
-     * @return bool
-     */
-    public function isEqualTo(UserInterface $user)
-    {
-        if (!$user instanceof User) {
-            return false;
-        }
-
-        if ($this->email !== $user->getUsername()) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * Removes sensitive data from the user.
-     *
-     * This is important if, at any given point, sensitive information like
-     * the plain-text password is stored on this object.
-     */
-    public function eraseCredentials()
-    {
-        /* @todo Implementation needed */
     }
 
     /**

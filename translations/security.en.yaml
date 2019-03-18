@@ -1,0 +1,6 @@
+auth:
+    error:
+        user_not_found: 'User is not registered.'
+        user_blocked: 'User is blocked.'
+        invalid_password: 'Password is invalid.'
+        user_not_confirmed: 'User is not confirmed.'
