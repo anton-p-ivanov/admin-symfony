@@ -42,6 +42,7 @@ form:
         username_not_found: User not registered
         invalid_password: Password is invalid or expired
         invalid_checkword: Checkword is invalid or expired
+        checkword_link: Resend checkword
     profile:
         username: E-Mail
         password: Password
@@ -50,6 +51,11 @@ form:
         last_name: Last name
         second_name: Second name
         login_link: Login with your credentials
+    checkword:
+        title: Resend checkword
+        resend: Resend
+        username: Please type an E-Mail linked with your personal profile
+        username_not_found: User not registered
 general:
     not_available: Not available
 flash:

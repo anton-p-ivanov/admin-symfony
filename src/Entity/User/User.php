@@ -394,11 +394,11 @@ class User
     }
 
     /**
-     * @return string[]
+     * @return Collection
      */
-    public function getRoles(): array
+    public function getRoles(): Collection
     {
-        return $this->roles->map(function (\App\Entity\Role $role) { return $role->getCode(); })->toArray();
+        return $this->roles;
     }
 
     /**

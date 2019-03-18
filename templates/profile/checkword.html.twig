@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'form.checkword.title' | trans }}
+{% endblock %}
+
+{% block body %}
+    <div class="p-profile">
+        <div class="modal modal--checkword">
+            <div class="modal__header">
+                {{ block('title') }}
+            </div>
+            <div class="modal__body">
+
+                {{ form_start(form, {'attr': {'class': 'form form--checkword', 'novalidate': true}}) }}
+                {{ form_errors(form) }}
+
+                {{ form_row(form.username, {'attr': {'placeholder': 'form.placeholder.email', 'autofocus': true}}) }}
+                {{ form_widget(form.resend) }}
+
+                <div class="links-group">
+                    <a class="links-group__link" href="{{ path('profile:login') }}">{{ 'form.profile.login_link' | trans }}</a>
+                </div>
+
+                {{ form_end(form) }}
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('profile') }}
+{% endblock %}

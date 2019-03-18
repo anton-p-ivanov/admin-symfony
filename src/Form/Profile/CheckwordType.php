@@ -8,11 +8,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Class ConfirmType
+ * Class CheckwordType
  *
  * @package App\Form\Profile
  */
-class ConfirmType extends AbstractType
+class CheckwordType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -22,27 +22,14 @@ class ConfirmType extends AbstractType
     {
         $builder
             ->add('username', Type\TextType::class, [
-                'label' => 'form.profile.username',
+                'label' => 'form.checkword.username',
                 'constraints' => [
                     new Assert\NotBlank(),
                     new Assert\Email()
                 ]
             ])
-            ->add('checkword', Type\TextType::class, [
-                'label' => 'form.confirm.checkword',
-                'constraints' => [
-                    new Assert\NotBlank(),
-                    new Assert\Length(['min' => 10, 'max' => 10])
-                ]
-            ])
-            ->add('password', Type\PasswordType::class, [
-                'label' => 'form.profile.password',
-                'constraints' => [
-                    new Assert\NotBlank()
-                ]
-            ])
-            ->add('confirm', Type\SubmitType::class, [
-                'label' => 'form.confirm.submit',
+            ->add('resend', Type\SubmitType::class, [
+                'label' => 'form.checkword.resend',
                 'translation_domain' => 'messages',
                 'attr' => ['class' => 'btn btn--primary btn--block']
             ]);

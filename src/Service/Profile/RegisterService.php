@@ -8,6 +8,7 @@ use App\Entity\User\Checkword;
 use App\Entity\User\Password;
 use App\Entity\User\User;
 use App\Service\MailService;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormInterface;
 
@@ -82,13 +83,18 @@ class RegisterService
             ->getRepository(Role::class)
             ->findBy(['code' => 'ROLE_USER']);
 
+        $sites = $this->entityManager
+            ->getRepository(Site::class)
+            ->findBy(['code' => 'ADMIN']);
+
         $user = new User();
 
         $attributes = [
             'email' => $data['username'],
             'fname' => $data['fname'],
             'lname' => $data['lname'],
-            'roles' => $roles,
+            'roles' => new ArrayCollection($roles),
+            'sites' => new ArrayCollection($sites),
             'password' => new Password($data['password'], $user),
             'checkword' => new Checkword($user)
         ];

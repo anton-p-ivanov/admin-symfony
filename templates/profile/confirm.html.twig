@@ -12,9 +12,21 @@
             </div>
             <div class="modal__body">
 
-                <div class="alert alert--warning">
-                    {{ 'form.confirm.notice' | trans }}
-                </div>
+                {% if error %}
+                    <div class="alert alert--danger">
+                        {{ error.messageKey|trans(error.messageData, 'security') }}
+                    </div>
+                {% elseif app.session.flashBag.has('success') %}
+                    {% for message in app.session.flashBag.get('success') %}
+                        <div class="alert alert--success">
+                            {{ message | trans }}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="alert alert--warning">
+                        {{ 'form.confirm.notice' | trans }}
+                    </div>
+                {% endif %}
 
                 {{ form_start(form, {'attr': {'class': 'form form--confirm', 'novalidate': true}}) }}
                 {{ form_errors(form) }}
@@ -23,10 +35,11 @@
                 {{ form_row(form.checkword) }}
                 {{ form_row(form.password) }}
 
-                <button type="submit" class="btn btn--primary btn--block">{{ 'form.confirm.submit' | trans }}</button>
+                {{ form_widget(form.confirm) }}
 
                 <div class="links-group">
                     <a class="links-group__link" href="{{ path('profile:login') }}">{{ 'form.profile.login_link' | trans }}</a>
+                    <a class="links-group__link" href="{{ path('profile:checkword', {'username': app.request.get('username')}) }}">{{ 'form.confirm.checkword_link' | trans }}</a>
                 </div>
 
                 {{ form_end(form) }}

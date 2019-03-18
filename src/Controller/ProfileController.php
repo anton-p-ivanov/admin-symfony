@@ -97,14 +97,42 @@ class ProfileController extends AbstractController
     }
 
     /**
+     * @Route("/checkword", name="profile:checkword")
+     *
+     * @param Request $request
+     * @param Profile\CheckwordService $service
+     *
+     * @return Response
+     */
+    public function checkword(Request $request, Profile\CheckwordService $service)
+    {
+        /* @var $form \Symfony\Component\Form\Form */
+        $form = $this->createForm(Type\CheckwordType::class, $request->query->all());
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($service->resend($form)) {
+                return $this->redirectToRoute('profile:confirm', [
+                    'username' => $form->get('username')->getNormData()
+                ]);
+            }
+        }
+
+        return $this->render('profile/checkword.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
      * @Route("/confirm", name="profile:confirm")
      *
      * @param Request $request
      * @param Profile\ConfirmService $service
+     * @param AuthenticationUtils $authenticationUtils
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function confirm(Request $request, Profile\ConfirmService $service): Response
+    public function confirm(Request $request, Profile\ConfirmService $service, AuthenticationUtils $authenticationUtils): Response
     {
         $form = $this->createForm(Type\ConfirmType::class, $request->query->all());
         $form->handleRequest($request);
@@ -117,7 +145,8 @@ class ProfileController extends AbstractController
         }
 
         return $this->render('profile/confirm.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'error' => $authenticationUtils->getLastAuthenticationError()
         ]);
     }
 
@@ -179,7 +208,16 @@ class ProfileController extends AbstractController
      */
     protected function authorize(User $user, Request $request)
     {
-        $token = new UsernamePasswordToken($user, null, 'main', ['USER']);
+        $securityUser = new \App\Security\User\User([
+            'fullName' => $user->getFullName(),
+            'username' => $user->getEmail(),
+            'isActive' => $user->isActive(),
+            'isConfirmed' => $user->isConfirmed(),
+            'roles' => $user->getRoles()->map(function (\App\Entity\Role $role) { return $role->getCode(); })->toArray()
+        ]);
+
+        $roles = $securityUser->getRoles();
+        $token = new UsernamePasswordToken($securityUser, null, 'main', $roles);
         $this->get('security.token_storage')->setToken($token);
         $this->get('session')->set('_security_main', serialize($token));
 

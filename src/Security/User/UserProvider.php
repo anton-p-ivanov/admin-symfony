@@ -2,6 +2,7 @@
 
 namespace App\Security\User;
 
+use App\Entity\Role;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Exception as Exception;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -100,7 +101,7 @@ class UserProvider implements UserProviderInterface
                 'username' => $username,
                 'password' => $password,
                 'salt' => $salt,
-                'roles' => $roles,
+                'roles' => $roles->map(function (Role $role) { return $role->getCode(); })->toArray(),
                 'isActive' => $userData->isActive(),
                 'isConfirmed' => $userData->isConfirmed(),
             ]);
