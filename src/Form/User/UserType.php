@@ -67,7 +67,6 @@ class UserType extends AbstractType
                 'constraints' => [
                     new Assert\NotBlank(),
                     new Assert\Email(),
-                    new Unique(['entityClass' => User::class, 'field' => 'email'])
                 ]
             ])
             ->add('fname', Type\TextType::class, [
