@@ -43,6 +43,13 @@ class Site
     private $title;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(type="string", length=65536, nullable=true)
+     */
+    private $description;
+
+    /**
      * @var string
      *
      * @ORM\Column(type="string", length=255)
@@ -180,5 +187,21 @@ class Site
     public function setSort(int $sort): void
     {
         $this->sort = $sort;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string|null $description
+     */
+    public function setDescription(?string $description): void
+    {
+        $this->description = $description;
     }
 }
