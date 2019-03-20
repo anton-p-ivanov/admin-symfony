@@ -1,0 +1,77 @@
+context:
+    menu:
+        edit: Edit
+        copy: Copy
+        delete: Delete
+table:
+    head:
+        fullname: Full name
+        email: E-Mail
+        active: Active
+        confirmed: Confirmed
+        login: Last login
+        modified: Modified
+toolbar:
+    btn:
+        add: Add
+tabs:
+    properties: Properties
+    permissions: Permissions
+    extra: Extra
+form:
+    account:
+        label: Account
+        help: Link user to selected account.
+        placeholder: - Select an account -
+    position:
+        label: Position
+        help: Allowed 200 characters maximum.
+        placeholder: Account manager
+    isActive:
+        label: Is user active
+    isConfirmed:
+        label: Is user confirmed
+    email:
+        label: E-Mail (required)
+        help: Valid E-Mail is required and used to authenticate user.
+        placeholder: username@email.com
+    fname:
+        label: First name (required)
+        help: Allowed 200 characters maximum.
+        placeholder: John
+    lname:
+        label: Last name (required)
+        help: Allowed 200 characters maximum.
+        placeholder: Smith
+    sname:
+        label: Middle name
+        help: Allowed 200 characters maximum.
+        placeholder: (optional)
+    phone:
+        label: Phone
+        help: Provide a phone number in international format (E.164).
+        placeholder: +1-123-1234567
+    phoneMobile:
+        label: Mobile phone
+        help: Provide a phone number in international format (E.164).
+        placeholder: +1-123-1234567
+    skype:
+        label: Skype name
+        help: A valid Skype ID or username.
+        placeholder: john.smith
+    birthdate:
+        label: Birthdate
+        help: A valid date is needed to send greetings.
+    password:
+        label: New password
+        placeholder: Password
+        generate: Generate
+    password_repeat:
+        label: Repeat password
+        placeholder: Password
+    avatar:
+        notes: Images with equal width and height are recommended. Maximum file size is 5 MB.
+        no_image: No image
+        select: Select image...
+passwords:
+    empty: No passwords are set

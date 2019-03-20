@@ -1,0 +1,25 @@
+{% extends "context.html.twig" %}
+
+{% set items = [
+    [
+        {
+            "title": 'context.menu.edit' | trans({}, 'users'),
+            "url": path('users:edit', {'uuid': row.uuid}),
+        },
+        {
+            "title": 'context.menu.copy' | trans({}, 'users'),
+            "url": path('users:copy', {'uuid': row.uuid}),
+        }
+    ],
+    [
+        {
+            "title": 'context.menu.delete' | trans({}, 'users'),
+            "url": path('users:delete', {'uuid': row.uuid}),
+            "attr": {
+                'data-toggle': 'modal',
+                'data-target': '#confirm-modal',
+                'data-remote': 'true'
+            }
+        }
+    ]
+] %}

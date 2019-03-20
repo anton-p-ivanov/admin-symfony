@@ -1,0 +1,104 @@
+{% extends "_spreadsheet.html.twig"  %}
+
+{% block spreadsheet_table %}
+    <table class="table">
+        <colgroup>
+            <col width="54">
+            <col span="2">
+            <col width="100" span="2">
+            <col width="12%" span="2">
+            <col width="40">
+        </colgroup>
+        <thead class="table__head">
+        <tr class="table__row">
+            <th class="table__item table__item--head">
+                <div class="checkbox checkbox--table">
+                    <label class="checkbox__label checkbox__label--table">
+                        <input type="checkbox" class="checkbox__input checkbox__input--table" data-toggle="table-select-all">
+                    </label>
+                </div>
+            </th>
+            {% set headers = [
+                { 'title': 'table.head.fullname', 'code': 'fullname' },
+                { 'title': 'table.head.email', 'code': 'email' },
+                { 'title': 'table.head.active', 'code': 'active', 'attr': {'class': 'table__item table__item--head table__item--center'} },
+                { 'title': 'table.head.confirmed', 'code': 'confirmed', 'attr': {'class': 'table__item table__item--head table__item--center'} },
+                { 'title': 'table.head.login', 'code': 'login' },
+                { 'title': 'table.head.modified', 'code': 'modified' }
+            ] %}
+            {% for header in headers %}
+                <th class="table__item table__item--head">
+                    <a href="{{ path('users:index', {'sort': header.code}) }}" class="table__sort" data-update="#spreadsheet">{{ header.title | trans({}, 'users') }}</a>
+                </th>
+            {% endfor %}
+            <th class="table__item table__item--head table__item--icon">
+                <svg width="24" height="24"><use xlink:href="#svg-menu"></use></svg>
+            </th>
+        </tr>
+        </thead>
+        <tbody class="table__body">
+        {% for row in rows %}
+            <tr class="table__row">
+                <td class="table__item">
+                    <div class="checkbox checkbox--table">
+                        <label class="checkbox__label checkbox__label--table">
+                            <input type="checkbox" class="checkbox__input checkbox__input--table" data-toggle="table-select" value="{{ row.uuid }}">
+                        </label>
+                    </div>
+                </td>
+                <td class="table__item">
+                    <span class="table-item__title">
+                        <a href="{{ path('users:edit', {'uuid': row.uuid}) }}">{{ row.fullName }}</a>
+                    </span>
+                </td>
+                <td class="table__item">
+                    <a href="mailto:{{ row.email }}" target="_blank">{{ row.email }}</a>
+                </td>
+                <td class="table__item table__item--center">
+                    {% if row.isActive %}
+                        <svg width="24" height="24"><use xlink:href="#svg-check"></use></svg>
+                    {% endif %}
+                </td>
+                <td class="table__item table__item--center">
+                    {% if row.isConfirmed %}
+                        <svg width="24" height="24"><use xlink:href="#svg-check"></use></svg>
+                    {% endif %}
+                </td>
+                <td class="table__item">
+                    <em>{{ 'general.not_available' | trans }}</em>
+                </td>
+                <td class="table__item">
+                    {% if row.workflow is not null %}
+                        {{ row.workflow.updatedAt | date }}
+                    {% else %}
+                        <em>{{ 'general.not_available' | trans }}</em>
+                    {% endif %}
+                </td>
+                <td class="table__item table__item--dropdown">
+                    <div class="dropdown dropdown--table">
+                        <a class="dropdown__toggle dropdown__toggle--icon" data-toggle="dropdown">
+                            <svg width="24" height="24"><use xlink:href="#svg-menu"></use></svg>
+                        </a>
+                        <ul class="dropdown__menu dropdown__menu--right">
+                            {% include('users/users/_index.context.html.twig') %}
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block spreadsheet_pagination %}
+    <div data-update="#spreadsheet">
+    {{ include('pagination.html.twig', {
+        'paginator': rows,
+        'path': 'users:index'
+    }) }}
+    </div>
+{% endblock %}
+
+{% block toolbar_buttons %}
+    {{ include('users/users/_index.toolbar.html.twig') }}
+{% endblock %}

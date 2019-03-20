@@ -1,0 +1,18 @@
+<div class="grid">
+    <div class="grid__column">
+        <h2>User roles</h2>
+        <hr />
+        {{ form_row(form.roles, {label: false}) }}
+        <button type="button" class="btn btn--default" data-toggle="selection" data-target="#{{ form.roles.vars.id }}">
+            {{ 'form.button.selection' | trans() }}
+        </button>
+    </div>
+    <div class="grid__column">
+        <h2>User sites</h2>
+        <hr />
+        {{ form_row(form.sites, {label: false}) }}
+        <button type="button" class="btn btn--default" data-toggle="selection" data-target="#{{ form.sites.vars.id }}">
+            {{ 'form.button.selection' | trans() }}
+        </button>
+    </div>
+</div>

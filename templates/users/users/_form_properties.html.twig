@@ -1,0 +1,52 @@
+<div class="grid">
+    <div class="grid__column">
+        <div class="grid">
+            <div class="grid__column">
+                {{ form_row(form.isActive) }}
+            </div>
+            <div class="grid__column">
+                {{ form_row(form.isConfirmed) }}
+            </div>
+        </div>
+        {{ form_row(form.email) }}
+        <div class="grid">
+            <div class="grid__column">
+                {{ form_row(form.fname) }}
+            </div>
+            <div class="grid__column">
+                {{ form_row(form.lname) }}
+            </div>
+        </div>
+        <div class="grid">
+            <div class="grid__column">
+                {{ form_row(form.sname) }}
+            </div>
+            <div class="grid__column">
+                {{ form_row(form.birthdate) }}
+            </div>
+        </div>
+        <hr />
+        <div class="grid">
+            <div class="grid__column">
+                {{ form_row(form.phone) }}
+            </div>
+            <div class="grid__column">
+                {{ form_row(form.phoneMobile) }}
+            </div>
+        </div>
+        {{ form_row(form.skype) }}
+    </div>
+    <div class="grid__column">
+        <div class="user-avatar">
+            <div class="user-avatar__image">
+                {{ 'form.avatar.no_image' | trans({}, 'users') }}
+            </div>
+            <div class="user-avatar__button">
+                <button class="btn btn--default">{{ 'form.avatar.select' | trans({}, 'users') }}</button>
+            </div>
+            <div class="user-avatar__notes">
+                {{ 'form.avatar.notes' | trans({}, 'users') }}
+            </div>
+        </div>
+    </div>
+</div>

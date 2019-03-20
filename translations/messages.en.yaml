@@ -58,6 +58,9 @@ form:
         username_not_found: User not registered
 general:
     not_available: Not available
+    booleans:
+        yes: Yes
+        no: No
 flash:
     create:
         success: New element has been created successfully.

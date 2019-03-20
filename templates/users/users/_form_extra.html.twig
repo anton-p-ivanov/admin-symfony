@@ -1,0 +1,92 @@
+<div class="grid">
+    <div class="grid__column">
+        <h2>Company</h2>
+
+        <hr />
+
+        {{ form_row(form.account.account) }}
+        {{ form_row(form.account.position) }}
+
+        <br />
+
+        <h2>Change password</h2>
+
+        <hr />
+
+        <div class="grid">
+            <div class="grid__column">
+                {{ form_row(form.password.first) }}
+            </div>
+            <div class="grid__column">
+                {{ form_row(form.password.second) }}
+            </div>
+            <div class="grid__column" style="flex-grow: 0;">
+                <div class="form__group">
+                    <label class="form__label">&nbsp;</label>
+                    <button data-toggle="password" class="btn btn--default">{{ 'form.password.generate' | trans({}, 'users') }}</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="grid__column">
+        <h2>Extra information</h2>
+
+        <div class="grid">
+            <div class="grid__column">
+                Registered:
+                {% if user.workflow is not null %}
+                    {{ user.workflow.createdAt | date }}
+                    {% if user.workflow.created is not null %}
+                        ({{ user.workflow.created.fullName }})
+                    {% endif %}
+                {% else %}
+                    {{ 'general.not_available' | trans }}
+                {% endif %}
+            </div>
+                <div class="grid__column">
+                Updated:
+                {% if user.workflow is not null %}
+                    {{ user.workflow.updatedAt | date }}
+                    {% if user.workflow.created is not null %}
+                        ({{ user.workflow.updated.fullName }})
+                    {% endif %}
+                {% else %}
+                    {{ 'general.not_available' | trans }}
+                {% endif %}
+            </div>
+        </div>
+
+        <br />
+
+        <h2>Passwords history</h2>
+
+        {% if user.passwords.count > 0 %}
+        <table class="table">
+            <thead class="table__head">
+            <tr class="table__row">
+                <th class="table__item table__item--head">Issue date</th>
+                <th class="table__item table__item--head">Expire date</th>
+                <th class="table__item table__item--head">Is valid</th>
+            </tr>
+            </thead>
+            <tbody class="table__body">
+            {% for password in user.passwords %}
+                <tr class="table__row">
+                    <td class="table__item">{{ password.createdAt | date }}</td>
+                    <td class="table__item">{{ password.expiredAt | date }}</td>
+                    <td class="table__item">
+                        {% if password.isValid %}
+                            <svg width="24" height="24"><use xlink:href="#svg-check"></use></svg>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+            <div><em>{{ 'passwords.empty' | trans({}, 'users') }}</em></div>
+        {% endif %}
+
+    </div>
+</div>

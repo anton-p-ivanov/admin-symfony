@@ -2,6 +2,7 @@
 
 namespace App\Entity\User;
 
+use App\Entity\Workflow;
 use App\Entity\WorkflowTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -140,14 +141,16 @@ class User
     private $sites;
 
     /**
-     * @var string|null
+     * @var \App\Entity\User\Account|null
+     *
+     * @ORM\OneToOne(targetEntity="App\Entity\User\Account", mappedBy="user", cascade={"persist"})
      */
-    private $password;
+    private $account;
 
     /**
-     * @var string|null
+     * @var string
      */
-    private $salt;
+    private $password;
 
     /**
      * User constructor.
@@ -174,6 +177,22 @@ class User
             if (method_exists($this, $method)) {
                 $this->$method($value);
             }
+        }
+    }
+
+    /**
+     * User cloning.
+     */
+    public function __clone()
+    {
+        $attributes = [
+            'passwords' => new ArrayCollection(),
+            'checkwords' => new ArrayCollection(),
+            'workflow' => new Workflow()
+        ];
+
+        foreach ($attributes as $name => $value) {
+            $this->$name = $value;
         }
     }
 
@@ -332,7 +351,7 @@ class User
     /**
      * @return ArrayCollection
      */
-    public function getSites(): ArrayCollection
+    public function getSites(): ?Collection
     {
         return $this->sites;
     }
@@ -359,6 +378,14 @@ class User
     public function setPasswords(ArrayCollection $passwords): void
     {
         $this->passwords = $passwords;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPassword(): ?string
+    {
+        return $this->password;
     }
 
     /**
@@ -447,5 +474,25 @@ class User
     public function getFullName(): string
     {
         return trim($this->fname . ' ' . $this->lname);
+    }
+
+    /**
+     * @return Account|null
+     */
+    public function getAccount(): ?Account
+    {
+        return $this->account;
+    }
+
+    /**
+     * @param Account $account
+     */
+    public function setAccount(Account $account): void
+    {
+        if (!$account->getUser()) {
+            $account->setUser($this);
+        }
+
+        $this->account = $account;
     }
 }

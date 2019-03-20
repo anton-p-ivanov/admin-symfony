@@ -1,0 +1,37 @@
+{% set nav = [
+    ['tabs.properties', 'properties'],
+    ['tabs.permissions', 'access'],
+    ['tabs.extra', 'extra'],
+] %}
+{{ form_start(form, {'attr': {'novalidate': true}}) }}
+
+{% for message in app.session.flashBag.get('success') %}
+    <div class="alert alert--success">
+        {{ message | trans }}
+    </div>
+{% endfor %}
+
+<div class="tabs">
+    <ul class="tabs__nav">
+        {% for item in nav %}
+            <li class="tabs__item">
+                <a class="tabs__link{% if loop.first %} tabs__link--active{% endif %}" href="#{{ item[1] }}" data-toggle="tab" data-target="#{{ item[1] }}">{{ item[0] | trans({}, 'users') }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <div class="tabs__panels">
+        {% for item in nav %}
+            <div class="tabs__panel{% if loop.first %} tabs__panel--active{% endif %}" id="{{ item[1] }}">
+                {{ include('/users/users/_form_' ~ item[1] ~ '.html.twig') }}
+            </div>
+        {% endfor %}
+    </div>
+    <div class="tabs__footer">
+        {{ form_widget(form.save) }}
+        {{ form_widget(form.apply) }}
+        <a href="{{ path('users:index') }}" class="btn btn--default">
+            {{ 'form.button.cancel' | trans }}
+        </a>
+    </div>
+</div>
+{{ form_end(form) }}
