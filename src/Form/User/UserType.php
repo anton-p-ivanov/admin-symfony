@@ -4,10 +4,11 @@ namespace App\Form\User;
 
 use App\Entity\Role;
 use App\Entity\Site;
+use App\Entity\User\Password;
 use App\Entity\User\User;
-use App\Validator\Constraints\Unique;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type as Type;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -41,6 +42,9 @@ class UserType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        /* @var User $user */
+        $user = $builder->getData();
+
         $builder
             ->add('isActive', Type\ChoiceType::class, [
                 'label' => 'form.isActive.label',
@@ -174,7 +178,6 @@ class UserType extends AbstractType
                     'attr' => ['placeholder' => 'form.password_repeat.placeholder']
                 ]
             ])
-//            ->add('password', PasswordType::class)
             // This hidden field is required for Workflow update
             ->add('updatedAt', Type\HiddenType::class, [ 'data' => time() ])
             ->add('save', Type\SubmitType::class, [
@@ -187,6 +190,17 @@ class UserType extends AbstractType
                 'translation_domain' => 'messages',
                 'attr' => ['class' => 'btn btn--default']
             ]);
+
+        $builder->get('password')->addModelTransformer(new CallbackTransformer(
+            function ($password) { return $password; },
+            function ($password) use ($user) {
+                if ($password) {
+                    return new Password($password, $user);
+                }
+
+                return $password;
+            }
+        ));
     }
 
     /**
