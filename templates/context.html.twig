@@ -16,7 +16,7 @@
 {% for group in filtered %}
     {% for item in group %}
         <li class="dropdown__item">
-            <a href="{{ item.url }}" class="dropdown__link"{% if item.attr is defined %}{% with {attr: item.attr} %}{{ block('attributes') }}{% endwith %}{% endif %}>{{ item.title | trans({}, 'storage') }}</a>
+            <a href="{{ item.url }}" class="dropdown__link"{% if item.attr is defined %}{% with {attr: item.attr} %}{{ block('attributes') }}{% endwith %}{% endif %}>{{ item.title }}</a>
         </li>
     {% endfor %}
     {% if not loop.last %}

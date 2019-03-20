@@ -2,7 +2,7 @@
 
 {% block form_widget_simple %}
     {% if type is not defined or type != 'hidden' %}
-        {% set attr = attr|merge({'class': (attr.class|default('') ~ ' form__input')|trim}) %}
+        {% set attr = attr|merge({'class': ('form__input ' ~ attr.class|default(''))|trim}) %}
         {% if not valid %}
             {% set attr = attr|merge({'class': (attr.class ~ ' form__input--invalid')|trim}) %}
         {% endif %}
@@ -61,10 +61,14 @@
 {%- block choice_widget_collapsed -%}
     {% set class = multiple ? 'form__input--select-multiple' : 'form__input--select' %}
     {% set attr = attr|merge({'class': (attr.class|default('') ~ ' form__input ' ~ class)|trim}) %}
+    {% if not valid %}
+        {% set attr = attr|merge({'class': (attr.class ~ ' form__input--invalid')|trim}) %}
+    {% endif %}
     {{ parent() }}
 {%- endblock choice_widget_collapsed -%}
 
 {% block choice_widget_expanded -%}
+    {% set attr = attr|merge({'class': ('form__choices ' ~ attr.class|default(''))|trim}) %}
     <div {{ block('widget_container_attributes') }}>
         {%- for child in form %}
             {{- form_widget(child) -}}
@@ -95,3 +99,8 @@
         <label class="radio__label" for="{{ form.vars.id }}">{{ label }}</label>
     </div>
 {%- endblock radio_widget %}
+
+{%- block date_widget -%}
+    {% set attr = attr|merge({'class': (attr.class|default('') ~ ' form__input--date')|trim}) %}
+    {{ block('form_widget_simple') }}
+{%- endblock date_widget -%}
