@@ -148,4 +148,12 @@ class Password
     {
         return $this->isExpired || ($this->expiredAt < new \DateTime());
     }
+
+    /**
+     * @return bool
+     */
+    public function isValid(): bool
+    {
+        return $this->isExpired() === false;
+    }
 }
